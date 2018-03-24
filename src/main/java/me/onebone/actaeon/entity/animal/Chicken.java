@@ -22,6 +22,7 @@ import me.onebone.actaeon.entity.attribute.IFallable;
 import me.onebone.actaeon.hook.AnimalGrowHook;
 import me.onebone.actaeon.hook.AnimalHook;
 import me.onebone.actaeon.hook.ChickenEggHook;
+import me.onebone.actaeon.target.AreaHandItemTargetAI;
 import me.onebone.actaeon.util.Utils;
 
 public class Chicken extends Animal implements EntityAgeable, IFallable {
@@ -30,7 +31,7 @@ public class Chicken extends Animal implements EntityAgeable, IFallable {
 
     public Chicken(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-        this.addHook("targetFinder", new AnimalHook(this, 500, Item.get(Item.WHEAT_SEEDS), 10));
+        this.setTargetFinder(new AreaHandItemTargetAI(this, 500, Item.get(Item.WHEAT_SEEDS), 10));
         this.addHook("egg", new ChickenEggHook(this));
     }
 

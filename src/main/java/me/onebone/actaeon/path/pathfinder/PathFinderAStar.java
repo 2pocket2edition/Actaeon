@@ -82,6 +82,10 @@ public class PathFinderAStar extends PathFinder {
                 }
             } catch (Exception e) {
                 return this.succeed = this.searching = false;
+            } finally {
+                if (node == null)   {
+                    return this.succeed = this.searching = false;
+                }
             }
 
             if (endNode.equals(node)) {

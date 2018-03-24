@@ -21,6 +21,7 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import me.onebone.actaeon.hook.AnimalGrowHook;
 import me.onebone.actaeon.hook.AnimalHook;
+import me.onebone.actaeon.target.AreaHandItemTargetAI;
 import me.onebone.actaeon.util.Utils;
 
 public class Cow extends Animal implements EntityAgeable {
@@ -29,7 +30,8 @@ public class Cow extends Animal implements EntityAgeable {
 
     public Cow(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-        this.addHook("targetFinder", new AnimalHook(this, 500, Item.get(Item.WHEAT), 10));
+        this.setTargetFinder(new AreaHandItemTargetAI(this, 500, Item.get(Item.WHEAT), 10));
+        //this.addHook("targetFinder", new AnimalHook(this, 500, Item.get(Item.WHEAT), 10));
     }
 
     @Override
@@ -99,5 +101,4 @@ public class Cow extends Animal implements EntityAgeable {
             this.addHook("grow", new AnimalGrowHook(this, Utils.rand(20 * 60 * 10, 20 * 60 * 20)));
         }
     }
-
 }

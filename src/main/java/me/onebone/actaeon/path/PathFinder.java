@@ -189,6 +189,10 @@ public abstract class PathFinder {
         return this.nodes.size() > 0;
     }
 
+    public boolean hasArrived() {
+        return this.arrived;
+    }
+
     /**
      * Search for route
      *

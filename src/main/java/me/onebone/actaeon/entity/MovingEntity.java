@@ -36,6 +36,7 @@ import me.onebone.actaeon.util.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 abstract public class MovingEntity extends EntityCreature {
@@ -46,7 +47,7 @@ abstract public class MovingEntity extends EntityCreature {
     private Vector3 target = null;
     private Entity hate = null;
     private String targetSetter = "";
-    private Map<String, MovingEntityHook> hooks = new HashMap<>();
+    private Map<String, MovingEntityHook> hooks;
     private MovingEntityTask task = null;
     private boolean lookAtFront = true;
 
@@ -63,15 +64,15 @@ abstract public class MovingEntity extends EntityCreature {
     }
 
     public Map<String, MovingEntityHook> getHooks() {
-        return hooks;
+        return hooks == null ? hooks = new Hashtable<>() : hooks;
     }
 
     public void addHook(String key, MovingEntityHook hook) {
-        this.hooks.put(key, hook);
+        this.getHooks().put(key, hook);
     }
 
     public void removeHook(String key) {
-        this.hooks.remove(key);
+        this.getHooks().remove(key);
     }
 
     @Override
@@ -105,11 +106,9 @@ abstract public class MovingEntity extends EntityCreature {
             return false;
         }
 
-        new ArrayList<>(this.hooks.values()).forEach(hook -> {
-
-
-            if (hook.shouldExecute()) {
-                hook.onUpdate(Server.getInstance().getTick());
+        this.getHooks().values().forEach(hook -> {
+            if (hook.shouldExecute())   {
+                hook.onUpdate(this.server.getTick());
             }
         });
         if (this.task != null) this.task.onUpdate(Server.getInstance().getTick());
@@ -220,6 +219,14 @@ abstract public class MovingEntity extends EntityCreature {
 			/*if(this.route.isSearching()) this.route.reSearch();
 			else this.route.search();*/
         }
+    }
+
+    public boolean isCurrentIdentifier(String identifier)   {
+        return identifier != null && identifier.equals(this.targetSetter);
+    }
+
+    public boolean hasReachedTarget() {
+        return this.route.hasArrived();
     }
 
     public Vector3 getRealTarget() {
@@ -347,7 +354,7 @@ abstract public class MovingEntity extends EntityCreature {
 
     @Override
     public boolean attack(EntityDamageEvent source) {
-        new ArrayList<>(this.hooks.values()).forEach(hook -> hook.onDamage(source));
+        this.getHooks().values().forEach(hook -> hook.onDamage(source));
         return super.attack(source);
     }
 
