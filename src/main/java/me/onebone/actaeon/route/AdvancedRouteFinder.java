@@ -15,6 +15,8 @@ package me.onebone.actaeon.route;
 
 import cn.nukkit.block.Block;
 import cn.nukkit.math.Vector3;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import me.onebone.actaeon.entity.Climbable;
 import me.onebone.actaeon.entity.Fallable;
 import me.onebone.actaeon.entity.MovingEntity;
@@ -52,8 +54,8 @@ public class AdvancedRouteFinder extends RouteFinder {
         try {
             start.f = start.g = 0;
             open.add(start);
-            this.grid.putNode(start.getVector3(), start);
-            this.grid.putNode(endNode.getVector3(), endNode);
+            this.grid.putNode(start);
+            this.grid.putNode(endNode);
         } catch (Exception e) {
             return this.succeed = this.searching = false;
         }
@@ -88,7 +90,7 @@ public class AdvancedRouteFinder extends RouteFinder {
                     node.add(0.5, 0, 0.5);
                     Vector3 direction = new Vector3(node.getX() - lastNode.getX(), node.getY() - lastNode.getY(), node.getZ() - lastNode.getZ()).normalize().divide(2);
                     if (lastNode.getY() == node.getY() && direction.lengthSquared() > 0) {  //Y不改变
-                        WalkableIterator iterator = new WalkableIterator(this, level, lastNode.getVector3(), direction, 0, (int) lastNode.getVector3().distance(node.getVector3()) + 1);
+                        WalkableIterator iterator = new WalkableIterator(this, level, lastNode, direction, 0, (int) lastNode.distance(node) + 1);
                         if (iterator.hasNext()) {  //无法直接到达
                             //level.addParticle(new cn.nukkit.level.particle.HappyVillagerParticle(node.getVector3()));
                             nodes.add(last);
@@ -132,14 +134,14 @@ public class AdvancedRouteFinder extends RouteFinder {
             for (Node neighbor : this.getNeighbors(node)) {
                 if (neighbor.closed) continue;
 
-                double tentative_gScore = node.g + neighbor.getVector3().distance(node.getVector3());
+                double tentative_gScore = node.g + neighbor.distance(node);
 
                 if (!open.contains(neighbor)) open.add(neighbor);
                 else if (neighbor.g != -1 && tentative_gScore >= neighbor.g) continue;
 
                 neighbor.setParent(node);
                 neighbor.g = tentative_gScore;
-                neighbor.f = neighbor.g + this.heuristic(neighbor.getVector3(), endNode.getVector3());
+                neighbor.f = neighbor.g + this.heuristic(neighbor, endNode);
 
                 if (this.forceStop) {
                     this.resetNodes();
@@ -156,7 +158,7 @@ public class AdvancedRouteFinder extends RouteFinder {
     public Set<Node> getNeighbors(Node node) {
         Set<Node> neighbors = new HashSet<>();
 
-        Vector3 vec = node.getVector3();
+        Vector3 vec = node.clone();
         boolean s1, s2, s3, s4;
 
         double y;
@@ -271,36 +273,45 @@ public class AdvancedRouteFinder extends RouteFinder {
     }
 
     private class Grid {
-        private Map<Double, Map<Double, Map<Double, Node>>> grid = new HashMap<>();
+        //TODO: serialize node to a long and use that for mapping
+        private Int2ObjectMap<Int2ObjectMap<Int2ObjectMap<Node>>> grid = new Int2ObjectOpenHashMap<>();
 
         synchronized void clear() {
             grid.clear();
         }
 
-        synchronized void putNode(Vector3 vec, Node node) {
-            vec = vec.floor().clone();
+        synchronized void putNode(Node node) {
+            int x = (int) node.x;
+            int y = (int) node.y;
+            int z = (int) node.z;
 
-            if (!grid.containsKey(vec.x)) {
-                grid.put(vec.x, new HashMap<>());
+            Int2ObjectMap<Int2ObjectMap<Node>> xMap = grid.get(x);
+            if (xMap == null) {
+                grid.put(x, xMap = new Int2ObjectOpenHashMap<>());
             }
 
-            if (!grid.get(vec.x).containsKey(vec.y)) {
-                grid.get(vec.x).put(vec.y, new HashMap<>());
+            Int2ObjectMap<Node> yMap = xMap.get(y);
+            if (yMap == null) {
+                xMap.put(y, yMap = new Int2ObjectOpenHashMap<>());
             }
 
-            grid.get(vec.x).get(vec.y).put(vec.z, node);
+            yMap.put(z, node);
         }
 
         synchronized Node getNode(Vector3 vec) {
-            vec = vec.floor().clone();
+            int x = (int) vec.x;
+            int y = (int) vec.y;
+            int z = (int) vec.z;
 
-            if (!grid.containsKey(vec.x) || !grid.get(vec.x).containsKey(vec.y) || !grid.get(vec.x).get(vec.y).containsKey(vec.z)) {
-                Node node = new Node(vec.x + 0.5, vec.y, vec.z + 0.5);
-                this.putNode(node.getVector3(), node);
+            Int2ObjectMap<Int2ObjectMap<Node>> xMap = grid.get(x);
+            Int2ObjectMap<Node> yMap = xMap == null ? null : xMap.get(y);
+            if (xMap == null || yMap == null || !yMap.containsKey(z))   {
+                Node node = new Node(x + 0.5d, y, z + 0.5d);
+                this.putNode(node);
                 return node;
             }
 
-            return grid.get(vec.x).get(vec.y).get(vec.z);
+            return yMap.get(z);
         }
     }
 }

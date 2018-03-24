@@ -13,6 +13,7 @@
 
 package me.onebone.actaeon.entity;
 
+import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.entity.Attribute;
 import cn.nukkit.entity.Entity;
@@ -22,6 +23,7 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
+import cn.nukkit.network.protocol.AddEntityPacket;
 import cn.nukkit.network.protocol.UpdateAttributesPacket;
 import me.onebone.actaeon.hook.MovingEntityHook;
 import me.onebone.actaeon.route.AdvancedRouteFinder;
@@ -144,7 +146,7 @@ abstract public class MovingEntity extends EntityCreature {
                 Node node = this.route.get();
                 if (node != null) {
                     //level.addParticle(new cn.nukkit.level.particle.RedstoneParticle(node.getVector3(), 2));
-                    Vector3 vec = node.getVector3();
+                    Vector3 vec = node.clone();
                     double diffX = Math.pow(vec.x - this.x, 2);
                     double diffZ = Math.pow(vec.z - this.z, 2);
 
@@ -346,6 +348,31 @@ abstract public class MovingEntity extends EntityCreature {
     public boolean attack(EntityDamageEvent source) {
         new ArrayList<>(this.hooks.values()).forEach(hook -> hook.onDamage(source));
         return super.attack(source);
+    }
+
+    @Override
+    public void spawnTo(Player player) {
+        AddEntityPacket pk = new AddEntityPacket();
+        pk.type = this.getNetworkId();
+        pk.entityUniqueId = this.getId();
+        pk.entityRuntimeId = this.getId();
+        pk.x = (float) this.x;
+        pk.y = (float) this.y;
+        pk.z = (float) this.z;
+        pk.speedX = (float) this.motionX;
+        pk.speedY = (float) this.motionY;
+        pk.speedZ = (float) this.motionZ;
+        pk.metadata = this.dataProperties;
+        player.dataPacket(pk);
+
+        UpdateAttributesPacket pk0 = new UpdateAttributesPacket();
+        pk0.entityId = this.getId();
+        pk0.entries = new Attribute[]{
+                Attribute.getAttribute(Attribute.MAX_HEALTH).setMaxValue(this.getMaxHealth()).setValue(this.getHealth()),
+        };
+        player.dataPacket(pk0);
+
+        super.spawnTo(player);
     }
 }
 
