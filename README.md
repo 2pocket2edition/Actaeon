@@ -1,18 +1,15 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE.md)
+[![Build Status](https://ci.potestas.xyz/job/NukkitX/job/master/badge/icon)](https://ci.potestas.xyz/job/NukkitX/job/master/)
+[![Discord](https://img.shields.io/discord/412888996444635137.svg)](https://discord.gg/E9KfsPN)
+
 # Actaeon
-The entity AI for Nukkit
 
-## License
-```
-The MIT License (MIT)
-Copyright (c) 2016 onebone
+The only mob AI plugin for Nukkit that isn't total shit™
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Originally developed by onebone and CreeperFace, currently mantained by [DaPorkchop_](http://daporkchop.net) for [2p2e](http://2p2e.net).
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+Featuring actual A* pathfinding, tasks, and much more!
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-```
 
-## References
-[PathFinding.js](https://github.com/qiao/PathFinding.js)<br>
-[A* Algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm)
+
+((note to self: fix jenkins link in header))
