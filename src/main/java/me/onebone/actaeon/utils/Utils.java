@@ -11,7 +11,7 @@
  *
  */
 
-package me.onebone.actaeon.Utils;
+package me.onebone.actaeon.utils;
 
 import cn.nukkit.math.NukkitRandom;
 import cn.nukkit.math.Vector3;

@@ -20,13 +20,6 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <repositories>
-        <repository>
-            <id>regularbox</id>
-            <url>http://ci.regularbox.com/plugin/repository/everything/</url>
-        </repository>
-    </repositories>
-
     <name>Actaeon</name>
     <url>https://github.com/onebone/Actaeon/</url>
 

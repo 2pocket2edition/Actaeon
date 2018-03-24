@@ -2,3 +2,7 @@
 *.iml
 /src/main/resources/rebel.xml
 out/
+/target
+*.class
+*.ipr
+*.iml
