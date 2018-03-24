@@ -22,6 +22,7 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.AddEntityPacket;
 import cn.nukkit.network.protocol.UpdateAttributesPacket;
 import me.onebone.actaeon.entity.EntityAgeable;
+import me.onebone.actaeon.util.Utils;
 
 abstract public class Animal extends EntityAgeable {
 
@@ -48,5 +49,10 @@ abstract public class Animal extends EntityAgeable {
 
     public boolean isBreedingItem(Item item) {
         return item.getId() == Item.WHEAT;
+    }
+
+    @Override
+    public int getXp() {
+        return Utils.rand(1, 4);
     }
 }

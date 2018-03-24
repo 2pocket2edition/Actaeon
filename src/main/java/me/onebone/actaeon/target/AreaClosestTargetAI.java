@@ -14,39 +14,41 @@
 package me.onebone.actaeon.target;
 
 import cn.nukkit.Player;
-import cn.nukkit.item.Item;
+import cn.nukkit.entity.Entity;
+import cn.nukkit.math.SimpleAxisAlignedBB;
 import me.onebone.actaeon.entity.MovingEntity;
 
-public class AreaPlayerHoldTargetFinder extends TargetFinder {
+/**
+ * Created by CreeperFace on 19.7.2017.
+ */
+public class AreaClosestTargetAI extends TargetFinder {
 
-    private Item item;
     private int radius;
+    private boolean first = true;
 
-    public AreaPlayerHoldTargetFinder(MovingEntity entity, long interval, Item item, int radius) {
+    public AreaClosestTargetAI(MovingEntity entity, long interval, int radius) {
         super(entity, interval);
-        this.item = item;
         this.radius = radius;
     }
 
     protected void find() {
-        Player near = null;
-        double nearest = this.radius * this.radius;
+        Entity near = null;
+        double nearest = Double.MAX_VALUE;
 
-        for (Player player : this.getEntity().getLevel().getPlayers().values()) {
-            if (this.getEntity().distanceSquared(player) < nearest) {
-                if (player.getInventory().getItemInHand().equals(this.item, true, false)) {
-                    near = player;
-                    nearest = this.getEntity().distance(player);
-                }
+        for (Entity e : this.getEntity().getLevel().getCollidingEntities(new SimpleAxisAlignedBB(entity.x - radius, entity.y - radius, entity.z - radius, entity.x + radius, entity.y + radius, entity.z + radius))) {
+            if (this.getEntity().distanceSquared(e) < nearest) {
+                near = e;
+                nearest = this.getEntity().distance(e);
             }
         }
 
-        if (near != null) {
-            this.getEntity().setTarget(near, this.getEntity().getName());
-            this.getEntity().setHate(near);
-        } else {
+        if (near == null) {
             //this.getEntity().getRoute().forceStop();
             this.getEntity().setTarget(null, this.getEntity().getName());
+        } else {
+            this.getEntity().setTarget(near, this.getEntity().getName(), this.first);
+            this.getEntity().setHate(near);
         }
+        this.first = false;
     }
 }

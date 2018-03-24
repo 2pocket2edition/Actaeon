@@ -67,18 +67,13 @@ public class Cow extends Animal implements EntityAgeable {
 
     @Override
     public Item[] getDrops() {
-        if (!isBaby()) {
-            Random random = new Random();
-            Item leather = Item.get(Item.LEATHER, 0, random.nextInt(2));
-            Item meat = Item.get(Item.RAW_BEEF, 0, random.nextInt(3) + 1);
-            EntityDamageEvent cause = this.getLastDamageCause();
-            if (cause.getCause() == EntityDamageEvent.DamageCause.FIRE) {
-                meat = Item.get(Item.STEAK, 0, random.nextInt(3) + 1);
-            }
-            this.getLevel().dropExpOrb(this, random.nextInt(3) + 1);
-            return new Item[]{leather, meat};
-        } else {
+        if (isBaby()) {
             return new Item[0];
+        } else {
+            return new Item[]{
+                    Item.get(this.isOnFire() ? Item.STEAK : Item.RAW_BEEF, 0, Utils.rand(1, 4)),
+                    Item.get(Item.LEATHER, 0, Utils.rand(0, 3))
+            };
         }
     }
 

@@ -14,7 +14,6 @@
 package me.onebone.actaeon.entity.animal;
 
 import cn.nukkit.entity.EntityAgeable;
-import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -62,17 +61,13 @@ public class Chicken extends Animal implements EntityAgeable, Fallable {
 
     @Override
     public Item[] getDrops() {
-        if (!isBaby()) {
-            Item chicken;
-            if (this.getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.FIRE)) {
-                chicken = Item.get(Item.COOKED_CHICKEN);
-            } else {
-                chicken = Item.get(Item.RAW_CHICKEN);
-            }
-            this.getLevel().dropExpOrb(this, Utils.rand(1, 4));
-            return new Item[]{chicken, Item.get(Item.FEATHER, 0, Utils.rand(0, 3))};
-        } else {
+        if (isBaby()) {
             return new Item[0];
+        } else {
+            return new Item[]{
+                    Item.get(this.isOnFire() ? Item.COOKED_CHICKEN : Item.RAW_CHICKEN, 0, 1),
+                    Item.get(Item.FEATHER, 0, Utils.rand(0, 3))
+            };
         }
     }
 

@@ -32,6 +32,7 @@ import me.onebone.actaeon.route.RouteFinder;
 import me.onebone.actaeon.runnable.RouteFinderSearchAsyncTask;
 import me.onebone.actaeon.target.TargetFinder;
 import me.onebone.actaeon.task.MovingEntityTask;
+import me.onebone.actaeon.util.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -374,5 +375,18 @@ abstract public class MovingEntity extends EntityCreature {
 
         super.spawnTo(player);
     }
+
+    @Override
+    public void kill() {
+        super.kill();
+
+        this.level.dropExpOrb(this, getXp(), new Vector3(
+                Utils.rand(-16, 17) / 32,
+                Utils.rand(-16, 17) / 32,
+                Utils.rand(-16, 17) / 32
+        ));
+    }
+
+    public abstract int getXp();
 }
 

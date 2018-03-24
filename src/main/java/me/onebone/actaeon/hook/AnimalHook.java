@@ -16,7 +16,7 @@ package me.onebone.actaeon.hook;
 import cn.nukkit.Player;
 import cn.nukkit.item.Item;
 import me.onebone.actaeon.entity.MovingEntity;
-import me.onebone.actaeon.target.AreaPlayerHoldTargetFinder;
+import me.onebone.actaeon.target.AreaHandItemTargetAI;
 import me.onebone.actaeon.target.StrollingTargetFinder;
 
 public class AnimalHook extends MovingEntityHook {
@@ -48,10 +48,10 @@ public class AnimalHook extends MovingEntityHook {
 
             if (near != null) {
                 if (entity.getTargetFinder() instanceof StrollingTargetFinder) {
-                    entity.setTargetFinder(new AreaPlayerHoldTargetFinder(entity, interval, item, radius));
+                    entity.setTargetFinder(new AreaHandItemTargetAI(entity, interval, item, radius));
                 }
             } else {
-                if (entity.getTargetFinder() instanceof AreaPlayerHoldTargetFinder) {
+                if (entity.getTargetFinder() instanceof AreaHandItemTargetAI) {
                     entity.setTargetFinder(new StrollingTargetFinder(entity));
                 }
             }

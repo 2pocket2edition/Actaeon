@@ -22,14 +22,15 @@ import me.onebone.actaeon.entity.Climbable;
 import me.onebone.actaeon.entity.Fallable;
 import me.onebone.actaeon.hook.AttackHook;
 import me.onebone.actaeon.hook.WanderHook;
-import me.onebone.actaeon.target.AreaHaterTargetFinder;
+import me.onebone.actaeon.target.AreaClassTargetAI;
+import me.onebone.actaeon.util.Utils;
 
 public class Zombie extends Monster implements EntityAgeable, Fallable, Climbable {
     public static final int NETWORK_ID = 32;
 
     public Zombie(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-        this.setTargetFinder(new AreaHaterTargetFinder(this, Player.class, 500, 16));
+        this.setTargetFinder(new AreaClassTargetAI(this, Player.class, 500, 16));
         this.addHook("attack", new AttackHook(this, this.getAttackDistance(), this.getDamage(), 1000, 10, 180));
         this.addHook("wander", new WanderHook(this));
     }
@@ -67,7 +68,12 @@ public class Zombie extends Monster implements EntityAgeable, Fallable, Climbabl
 
     @Override
     public Item[] getDrops() {
-        return new Item[]{Item.get(Item.ROTTEN_FLESH)};
+        return new Item[]   {
+                Item.get(Item.ROTTEN_FLESH, 0, Utils.rand(0, 3)),
+                Item.get(Item.IRON_INGOT, 0, Math.max(0, Utils.rand(-50, 1))),
+                Item.get(Item.CARROT, 0, Math.max(0, Utils.rand(-50, 1))),
+                Item.get(Item.POTATO, 0, Math.max(0, Utils.rand(-50, 1)))
+        };
     }
 
     public double getAttackDistance() {
@@ -88,5 +94,10 @@ public class Zombie extends Monster implements EntityAgeable, Fallable, Climbabl
     @Override
     public boolean isBaby() {
         return false;
+    }
+
+    @Override
+    public int getXp() {
+        return Utils.rand(1, 4) + (isBaby() ? 7 : 0);
     }
 }

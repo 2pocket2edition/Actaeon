@@ -63,7 +63,9 @@ public class Pig extends Animal implements EntityAgeable {
 
     @Override
     public Item[] getDrops() {
-        return new Item[]{Item.get(Item.RAW_PORKCHOP)};
+        return new Item[]{
+                Item.get(this.isOnFire() ? Item.COOKED_PORKCHOP : Item.RAW_PORKCHOP, 0, Utils.rand(1, 4))
+        };
     }
 
     @Override

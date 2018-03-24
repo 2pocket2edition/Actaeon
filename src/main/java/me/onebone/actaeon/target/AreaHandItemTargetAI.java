@@ -14,19 +14,18 @@
 package me.onebone.actaeon.target;
 
 import cn.nukkit.Player;
-import cn.nukkit.entity.Entity;
+import cn.nukkit.item.Item;
 import me.onebone.actaeon.entity.MovingEntity;
 
-public class AreaHaterTargetFinder extends TargetFinder {
+public class AreaHandItemTargetAI extends TargetFinder {
 
+    private Item item;
     private int radius;
-    private boolean first = true;
-    private Class<? extends Entity> target;
 
-    public AreaHaterTargetFinder(MovingEntity entity, Class<? extends Entity> target, long interval, int radius) {
+    public AreaHandItemTargetAI(MovingEntity entity, long interval, Item item, int radius) {
         super(entity, interval);
+        this.item = item;
         this.radius = radius;
-        this.target = target;
     }
 
     protected void find() {
@@ -35,18 +34,19 @@ public class AreaHaterTargetFinder extends TargetFinder {
 
         for (Player player : this.getEntity().getLevel().getPlayers().values()) {
             if (this.getEntity().distanceSquared(player) < nearest) {
-                near = player;
-                nearest = this.getEntity().distance(player);
+                if (player.getInventory().getItemInHand().equals(this.item, true, false)) {
+                    near = player;
+                    nearest = this.getEntity().distance(player);
+                }
             }
         }
 
         if (near != null) {
-            this.getEntity().setTarget(near, this.getEntity().getName(), this.first);
+            this.getEntity().setTarget(near, this.getEntity().getName());
             this.getEntity().setHate(near);
         } else {
             //this.getEntity().getRoute().forceStop();
             this.getEntity().setTarget(null, this.getEntity().getName());
         }
-        this.first = false;
     }
 }
