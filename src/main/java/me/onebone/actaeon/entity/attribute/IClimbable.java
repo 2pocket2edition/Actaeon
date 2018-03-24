@@ -11,7 +11,13 @@
  *
  */
 
-package me.onebone.actaeon.entity;
+package me.onebone.actaeon.entity.attribute;
 
-public interface Hostile {
+/**
+ * Entities implementing this interface will be able to pathfind up cliffs
+ * (i.e. spiders)
+ *
+ * @author DaPorkchop_
+ */
+public interface IClimbable {
 }

@@ -11,7 +11,12 @@
  *
  */
 
-package me.onebone.actaeon.entity;
+package me.onebone.actaeon.entity.attribute;
 
-public interface Climbable {
+/**
+ * Entities implementing this interface will be able to pathfind down drops longer than 4 blocks
+ *
+ * @author DaPorkchop_
+ */
+public interface IFallable {
 }

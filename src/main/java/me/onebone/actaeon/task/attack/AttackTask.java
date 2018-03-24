@@ -11,7 +11,7 @@
  *
  */
 
-package me.onebone.actaeon.task;
+package me.onebone.actaeon.task.attack;
 
 import cn.nukkit.Server;
 import cn.nukkit.entity.Entity;
@@ -19,6 +19,7 @@ import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.network.protocol.EntityEventPacket;
 import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.task.MovingEntityTask;
 
 /**
  * AttackTask
@@ -28,17 +29,15 @@ import me.onebone.actaeon.entity.MovingEntity;
  */
 public class AttackTask extends MovingEntityTask {
 
-    private Entity target;
-    private float damage;
-    private double viewAngle;
-    private boolean effectual;
+    protected Entity target;
+    protected float damage;
+    protected double viewAngle;
 
-    public AttackTask(MovingEntity entity, Entity target, float damage, double viewAngle, boolean effectual) {
+    public AttackTask(MovingEntity entity, Entity target, float damage, double viewAngle) {
         super(entity);
         this.target = target;
         this.damage = damage;
         this.viewAngle = viewAngle;
-        this.effectual = effectual;
     }
 
     @Override
@@ -55,7 +54,11 @@ public class AttackTask extends MovingEntityTask {
         } else {
             valid = yaw < max && yaw > min;
         }
-        if (valid && this.effectual) {
+        doAttack(valid);
+    }
+
+    protected void doAttack(boolean valid)  {
+        if (valid) {
             if (this.target.noDamageTicks <= 0) {
                 this.target.attack(new EntityDamageByEntityEvent(this.getEntity(), this.target, EntityDamageEvent.DamageCause.ENTITY_ATTACK, this.damage));
                 this.target.noDamageTicks = 10;

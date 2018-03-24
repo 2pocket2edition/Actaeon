@@ -11,7 +11,12 @@
  *
  */
 
-package me.onebone.actaeon.entity;
+package me.onebone.actaeon.entity.attribute;
 
-public interface Fallable {
+/**
+ * Represents a hostile mob
+ *
+ * @author DaPorkchop_
+ */
+public interface IHostile {
 }

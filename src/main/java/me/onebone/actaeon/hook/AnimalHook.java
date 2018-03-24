@@ -31,6 +31,7 @@ public class AnimalHook extends MovingEntityHook {
         this.interval = interval;
         this.item = item;
         this.radius = radius;
+        animal.setTargetFinder(new StrollingTargetFinder(entity));
     }
 
     @Override

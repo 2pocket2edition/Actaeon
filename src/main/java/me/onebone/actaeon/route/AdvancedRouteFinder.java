@@ -17,8 +17,8 @@ import cn.nukkit.block.Block;
 import cn.nukkit.math.Vector3;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import me.onebone.actaeon.entity.Climbable;
-import me.onebone.actaeon.entity.Fallable;
+import me.onebone.actaeon.entity.attribute.IClimbable;
+import me.onebone.actaeon.entity.attribute.IFallable;
 import me.onebone.actaeon.entity.MovingEntity;
 
 import java.util.*;
@@ -217,7 +217,7 @@ public class AdvancedRouteFinder extends RouteFinder {
 
         double diff = (block.y - vec.y) + 1;
 
-        if ((this.entity instanceof Fallable || -4 < diff) && (this.entity instanceof Climbable || diff <= 1) && canWalkOn(this.entity.getLevel().getBlockIdAt((int) block.x, (int) block.y, (int) block.z))) {
+        if ((this.entity instanceof IFallable || -4 < diff) && (this.entity instanceof IClimbable || diff <= 1) && canWalkOn(this.entity.getLevel().getBlockIdAt((int) block.x, (int) block.y, (int) block.z))) {
             return diff;
         }
         return -256;

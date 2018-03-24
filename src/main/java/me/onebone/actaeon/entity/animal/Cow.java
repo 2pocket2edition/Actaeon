@@ -15,6 +15,7 @@ package me.onebone.actaeon.entity.animal;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.EntityAgeable;
+import cn.nukkit.entity.passive.EntityCow;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -23,7 +24,7 @@ import me.onebone.actaeon.hook.AnimalHook;
 import me.onebone.actaeon.util.Utils;
 
 public class Cow extends Animal implements EntityAgeable {
-    public static final int NETWORK_ID = 11;
+    public static final int NETWORK_ID = EntityCow.NETWORK_ID;
     private boolean isBaby = false;
 
     public Cow(FullChunk chunk, CompoundTag nbt) {
@@ -76,7 +77,6 @@ public class Cow extends Animal implements EntityAgeable {
 
     @Override
     public boolean entityBaseTick(int tickDiff) {
-
         return super.entityBaseTick(tickDiff);
     }
 

@@ -15,6 +15,7 @@ package me.onebone.actaeon.entity.animal;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
+import cn.nukkit.entity.passive.EntityWolf;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.item.Item;
@@ -26,8 +27,7 @@ import me.onebone.actaeon.hook.AttackHook;
 import me.onebone.actaeon.util.Utils;
 
 public class Wolf extends EntityTameable {
-
-    public static final int NETWORK_ID = 14;
+    public static final int NETWORK_ID = EntityWolf.NETWORK_ID;
 
     public Wolf(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);

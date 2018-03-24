@@ -14,7 +14,7 @@
 package me.onebone.actaeon.entity.monster;
 
 import cn.nukkit.entity.EntityAgeable;
-import cn.nukkit.entity.mob.EntityZombie;
+import cn.nukkit.entity.mob.EntitySkeleton;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -25,13 +25,16 @@ import me.onebone.actaeon.hook.WanderHook;
 import me.onebone.actaeon.target.AreaPlayerTargetAI;
 import me.onebone.actaeon.util.Utils;
 
-public class Zombie extends Monster implements EntityAgeable, IFallable, IClimbable {
-    public static final int NETWORK_ID = EntityZombie.NETWORK_ID;
+/**
+ * @author DaPorkchop_
+ */
+public class Skeleton extends Monster implements EntityAgeable, IFallable, IClimbable {
+    public static final int NETWORK_ID = EntitySkeleton.NETWORK_ID;
 
-    public Zombie(FullChunk chunk, CompoundTag nbt) {
+    public Skeleton(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
         this.setTargetFinder(new AreaPlayerTargetAI(this, 500, 32));
-        this.addHook("attack", new AttackHook(this, this.getAttackDistance(), this.getDamage(), 1000, 10, 180));
+        this.addHook("attack", new AttackHook(this, this.getAttackDistance(), this.getDamage(), 5000, 10, 180));
         this.addHook("wander", new WanderHook(this));
     }
 
@@ -69,15 +72,14 @@ public class Zombie extends Monster implements EntityAgeable, IFallable, IClimba
     @Override
     public Item[] getDrops() {
         return new Item[]{
-                Item.get(Item.ROTTEN_FLESH, 0, Utils.rand(0, 3)),
-                Item.get(Item.IRON_INGOT, 0, Math.max(0, Utils.rand(-50, 1))),
-                Item.get(Item.CARROT, 0, Math.max(0, Utils.rand(-50, 1))),
-                Item.get(Item.POTATO, 0, Math.max(0, Utils.rand(-50, 1)))
+                Item.get(Item.BONE, 0, Utils.rand(0, 3)),
+                Item.get(Item.ARROW, 0, Utils.rand(0, 3)),
+                Item.get(Item.BOW, 0, Math.max(0, Utils.rand(-10, 1)))
         };
     }
 
     public double getAttackDistance() {
-        return 1;
+        return 16;
     }
 
     @Override

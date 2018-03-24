@@ -14,17 +14,18 @@
 package me.onebone.actaeon.entity.animal;
 
 import cn.nukkit.entity.EntityAgeable;
+import cn.nukkit.entity.passive.EntityChicken;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import me.onebone.actaeon.entity.Fallable;
+import me.onebone.actaeon.entity.attribute.IFallable;
 import me.onebone.actaeon.hook.AnimalGrowHook;
 import me.onebone.actaeon.hook.AnimalHook;
 import me.onebone.actaeon.hook.ChickenEggHook;
 import me.onebone.actaeon.util.Utils;
 
-public class Chicken extends Animal implements EntityAgeable, Fallable {
-    public static final int NETWORK_ID = 10;
+public class Chicken extends Animal implements EntityAgeable, IFallable {
+    public static final int NETWORK_ID = EntityChicken.NETWORK_ID;
     private boolean isBaby = false;
 
     public Chicken(FullChunk chunk, CompoundTag nbt) {

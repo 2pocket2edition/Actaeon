@@ -13,6 +13,7 @@
 
 package me.onebone.actaeon.entity.animal;
 
+import cn.nukkit.entity.passive.EntitySheep;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -20,7 +21,7 @@ import me.onebone.actaeon.hook.AnimalHook;
 import me.onebone.actaeon.util.Utils;
 
 public class Sheep extends Animal {
-    public static final int NETWORK_ID = 13;
+    public static final int NETWORK_ID = EntitySheep.NETWORK_ID;
 
     public Sheep(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
