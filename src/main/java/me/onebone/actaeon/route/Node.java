@@ -13,9 +13,19 @@
 
 package me.onebone.actaeon.route;
 
+import cn.nukkit.math.MathHelper;
 import cn.nukkit.math.Vector3;
 
 public class Node extends Vector3 {
+    private static final int NUM_X_BITS = 1 + MathHelper.calculateLogBaseTwo(MathHelper.roundUpToPowerOfTwo(30000000));
+    private static final int NUM_Z_BITS = NUM_X_BITS;
+    private static final int NUM_Y_BITS = 64 - NUM_X_BITS - NUM_Z_BITS;
+    private static final int Y_SHIFT = NUM_Z_BITS;
+    private static final int X_SHIFT = Y_SHIFT + NUM_Y_BITS;
+    private static final long X_MASK = (1L << NUM_X_BITS) - 1L;
+    private static final long Y_MASK = (1L << NUM_Y_BITS) - 1L;
+    private static final long Z_MASK = (1L << NUM_Z_BITS) - 1L;
+
     private Node parent = null;
     public boolean closed = false;
 
@@ -42,8 +52,16 @@ public class Node extends Vector3 {
         return this.parent;
     }
 
+    public long toLong() {
+        return toLong((long) this.x, (long) this.y, (long) this.z);
+    }
+
+    public static long toLong(long x, long y, long z)  {
+        return (x & X_MASK) << X_SHIFT | (y & Y_MASK) << Y_SHIFT | (z & Z_MASK);
+    }
+
     public boolean equals(Node node) {
-        if (node == null)   {
+        if (node == null) {
             return false;
         }
 

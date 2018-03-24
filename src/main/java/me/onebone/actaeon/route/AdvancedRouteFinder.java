@@ -15,8 +15,8 @@ package me.onebone.actaeon.route;
 
 import cn.nukkit.block.Block;
 import cn.nukkit.math.Vector3;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import me.onebone.actaeon.entity.Climbable;
 import me.onebone.actaeon.entity.Fallable;
 import me.onebone.actaeon.entity.MovingEntity;
@@ -273,45 +273,30 @@ public class AdvancedRouteFinder extends RouteFinder {
     }
 
     private class Grid {
-        //TODO: serialize node to a long and use that for mapping
-        private Int2ObjectMap<Int2ObjectMap<Int2ObjectMap<Node>>> grid = new Int2ObjectOpenHashMap<>();
+        private final Long2ObjectMap<Node> grid = new Long2ObjectOpenHashMap<>();
 
-        synchronized void clear() {
-            grid.clear();
+        void clear() {
+            synchronized (grid) {
+                grid.clear();
+            }
         }
 
-        synchronized void putNode(Node node) {
-            int x = (int) node.x;
-            int y = (int) node.y;
-            int z = (int) node.z;
-
-            Int2ObjectMap<Int2ObjectMap<Node>> xMap = grid.get(x);
-            if (xMap == null) {
-                grid.put(x, xMap = new Int2ObjectOpenHashMap<>());
+        void putNode(Node node) {
+            synchronized (grid) {
+                grid.put(node.toLong(), node);
             }
-
-            Int2ObjectMap<Node> yMap = xMap.get(y);
-            if (yMap == null) {
-                xMap.put(y, yMap = new Int2ObjectOpenHashMap<>());
-            }
-
-            yMap.put(z, node);
         }
 
-        synchronized Node getNode(Vector3 vec) {
-            int x = (int) vec.x;
-            int y = (int) vec.y;
-            int z = (int) vec.z;
+        Node getNode(Vector3 vec) {
+            long hash = Node.toLong((long) vec.x, (long) vec.y, (long) vec.z);
+            synchronized (grid) {
+                Node node = grid.get(hash);
+                if (node == null) {
+                    grid.put(hash, node = new Node(vec.x + 0.5d, vec.y, vec.z + 0.5d));
+                }
 
-            Int2ObjectMap<Int2ObjectMap<Node>> xMap = grid.get(x);
-            Int2ObjectMap<Node> yMap = xMap == null ? null : xMap.get(y);
-            if (xMap == null || yMap == null || !yMap.containsKey(z))   {
-                Node node = new Node(x + 0.5d, y, z + 0.5d);
-                this.putNode(node);
                 return node;
             }
-
-            return yMap.get(z);
         }
     }
 }
