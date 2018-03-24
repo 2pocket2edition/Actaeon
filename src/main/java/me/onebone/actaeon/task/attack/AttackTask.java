@@ -55,6 +55,7 @@ public class AttackTask extends MovingEntityTask {
             valid = yaw < max && yaw > min;
         }
         doAttack(valid);
+        this.entity.updateBotTask(null);
     }
 
     protected void doAttack(boolean valid)  {
@@ -69,7 +70,6 @@ public class AttackTask extends MovingEntityTask {
         pk.eid = this.entity.getId();
         pk.event = 4;
         Server.broadcastPacket(this.getEntity().getViewers().values(), pk);
-        this.entity.updateBotTask(null);
     }
 
     @Override

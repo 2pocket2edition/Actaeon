@@ -25,7 +25,7 @@ public class AttackTaskShoot extends AttackTask {
             double pitch = this.entity.pitch + Utils.rand(-60, 61) / 10;
             Location pos = new Location(this.entity.x - Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * 0.5, this.entity.y + this.entity.getHeight() - 0.18,
                     this.entity.z + Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * 0.5, yaw, pitch, this.entity.level);
-            Entity k = Entity.createEntity("Arrow", pos, this);
+            Entity k = Entity.createEntity("Arrow", pos, this.entity);
             if (!(k instanceof EntityArrow)) {
                 return;
             }

@@ -23,6 +23,7 @@ import me.onebone.actaeon.entity.attribute.IFallable;
 import me.onebone.actaeon.hook.AttackHook;
 import me.onebone.actaeon.hook.WanderHook;
 import me.onebone.actaeon.target.AreaPlayerTargetAI;
+import me.onebone.actaeon.task.attack.AttackTaskShoot;
 import me.onebone.actaeon.util.Utils;
 
 /**
@@ -34,7 +35,7 @@ public class Skeleton extends Monster implements EntityAgeable, IFallable, IClim
     public Skeleton(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
         this.setTargetFinder(new AreaPlayerTargetAI(this, 500, 32));
-        this.addHook("attack", new AttackHook(this, this.getAttackDistance(), this.getDamage(), 5000, 10, 180));
+        this.addHook("attack", new AttackHook(this, this.getAttackDistance(), this.getDamage(), 5000, 10, 180, AttackTaskShoot::new));
         this.addHook("wander", new WanderHook(this));
     }
 

@@ -20,7 +20,6 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import me.onebone.actaeon.entity.attribute.IFallable;
 import me.onebone.actaeon.hook.AnimalGrowHook;
-import me.onebone.actaeon.hook.AnimalHook;
 import me.onebone.actaeon.hook.ChickenEggHook;
 import me.onebone.actaeon.target.AreaHandItemTargetAI;
 import me.onebone.actaeon.util.Utils;

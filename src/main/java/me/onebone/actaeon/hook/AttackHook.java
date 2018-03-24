@@ -19,8 +19,6 @@ import me.onebone.actaeon.task.attack.AttackTask;
 import me.onebone.actaeon.util.Utils;
 import me.onebone.actaeon.util.function.AttackTaskProvider;
 
-import java.util.Random;
-
 /**
  * AttackHook
  * ===============
@@ -29,17 +27,13 @@ import java.util.Random;
  */
 public class AttackHook extends MovingEntityHook {
     private AttackTaskProvider provider;
-    private long lastAttack = 0;
+    private volatile long nextAttack = 0;
     private double attackDistance;
     private long coolDown;
     private int effectual;  //攻击成功率 0~10
     private double viewAngle;  //机器人视野范围（攻击有效范围）
     private boolean jump;  //是否自动跳劈
     private float damage;
-
-    public AttackHook(MovingEntity entity) {
-        this(entity, 2.6, 2, 250, 6, 75);
-    }
 
     public AttackHook(MovingEntity bot, double attackDistance, float damage, long coolDown, int effectual, double viewAngle) {
         super(bot);
@@ -72,8 +66,8 @@ public class AttackHook extends MovingEntityHook {
         this.coolDown = coolDown;
     }
 
-    public long getLastAttack() {
-        return lastAttack;
+    public long getNextAttack() {
+        return nextAttack;
     }
 
     public boolean canJump() {
@@ -93,15 +87,14 @@ public class AttackHook extends MovingEntityHook {
 
     @Override
     public void onUpdate(int tick) {
-        if (this.entity.getHate() != null) {
-            Entity hate = this.entity.getHate();
-            if (this.entity.distance(hate) <= this.attackDistance) {
-                if (System.currentTimeMillis() - this.lastAttack > this.coolDown) {
+        if (System.currentTimeMillis() > this.nextAttack) {
+            this.nextAttack = System.currentTimeMillis() + coolDown;
+            if (this.entity.getHate() != null) {
+                Entity hate = this.entity.getHate();
+                if (this.entity.distance(hate) <= this.attackDistance) {
                     if (this.entity.getTask() == null && Utils.rand(0, 10) < this.effectual) {
                         this.entity.updateBotTask(provider.provide(this.entity, hate, this.damage, this.viewAngle));
                     }
-                    this.lastAttack = System.currentTimeMillis();
-                    //if (this.jump && new Random().nextBoolean()) this.entity.jump();
                 }
             }
         }

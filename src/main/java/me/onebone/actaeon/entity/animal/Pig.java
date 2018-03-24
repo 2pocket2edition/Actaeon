@@ -19,7 +19,7 @@ import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import me.onebone.actaeon.hook.AnimalGrowHook;
-import me.onebone.actaeon.hook.AnimalHook;
+import me.onebone.actaeon.target.AreaHandItemTargetAI;
 import me.onebone.actaeon.util.Utils;
 
 public class Pig extends Animal implements EntityAgeable {
@@ -28,7 +28,7 @@ public class Pig extends Animal implements EntityAgeable {
 
     public Pig(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-        this.addHook("targetFinder", new AnimalHook(this, 500, Item.get(Item.CARROTS), 10));
+        this.setTargetFinder(new AreaHandItemTargetAI(this, 500, Item.get(Item.CARROT), 10));
     }
 
     @Override
