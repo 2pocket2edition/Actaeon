@@ -21,6 +21,7 @@ import cn.nukkit.block.BlockTallGrass;
 import cn.nukkit.level.particle.DestroyBlockParticle;
 import cn.nukkit.network.protocol.EntityEventPacket;
 import me.onebone.actaeon.entity.animal.Animal;
+import me.onebone.actaeon.util.Utils;
 
 /**
  * Created by CreeperFace on 15.7.2017.
@@ -36,7 +37,7 @@ public class EatGrassHook extends MovingEntityHook {
     @Override
     public void onUpdate(int tick) {
         if (!this.executing) {
-            if (this.entity.level.rand.nextInt(((Animal) this.entity).isBaby() ? 50 : 1000) != 0) {
+            if (Utils.rand(0, ((Animal) this.entity).isBaby() ? 50 : 1000) != 0) {
                 return;
             } else {
                 Block block = this.entity.getLevelBlock();

@@ -15,7 +15,7 @@ package me.onebone.actaeon.hook;
 
 import cn.nukkit.math.Vector3;
 import me.onebone.actaeon.entity.MovingEntity;
-import me.onebone.actaeon.Utils.Utils;
+import me.onebone.actaeon.util.Utils;
 
 /**
  * Created by CreeperFace on 19.7.2017.
@@ -36,7 +36,7 @@ public class WanderHook extends MovingEntityHook {
 
     @Override
     public void onUpdate(int tick) {
-        if (!this.entity.routeLeading || this.entity.getHate() != null || this.entity.level.rand.nextInt(this.chance) != 0) {
+        if (!this.entity.routeLeading || this.entity.getHate() != null || Utils.rand(0, this.chance) != 0) {
             return;
         }
 

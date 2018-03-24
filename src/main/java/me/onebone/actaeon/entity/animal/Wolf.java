@@ -23,6 +23,7 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import me.onebone.actaeon.entity.EntityTameable;
 import me.onebone.actaeon.hook.AnimalHook;
 import me.onebone.actaeon.hook.AttackHook;
+import me.onebone.actaeon.util.Utils;
 
 public class Wolf extends EntityTameable {
 
@@ -64,7 +65,7 @@ public class Wolf extends EntityTameable {
 			if (item.getId() == Item.BONE && !isAngry()) {
 				item.count--;
 
-				if (this.level.rand.nextInt(3) == 0) {
+				if (Utils.rand(0, 3) == 0) {
 					setTamed(true);
 					setMaxHealth(20);
 					setHealth(20);

@@ -19,7 +19,7 @@ import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import me.onebone.actaeon.Utils.Utils;
+import me.onebone.actaeon.util.Utils;
 import me.onebone.actaeon.hook.AnimalGrowHook;
 import me.onebone.actaeon.hook.AnimalHook;
 

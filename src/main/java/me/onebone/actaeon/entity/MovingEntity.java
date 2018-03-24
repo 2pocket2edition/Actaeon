@@ -259,12 +259,12 @@ abstract public class MovingEntity extends EntityCreature {
 
         double maxY = 0;
         for (AxisAlignedBB bb : list) {
-            if (bb.maxY > maxY) {
-                maxY = bb.maxY;
+            if (bb.getMaxY() > maxY) {
+                maxY = bb.getMaxY();
             }
         }
 
-        this.onGround = (maxY == this.boundingBox.minY);
+        this.onGround = (maxY == this.boundingBox.getMinY());
     }
 
     @Override

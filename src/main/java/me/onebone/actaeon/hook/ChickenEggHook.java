@@ -15,7 +15,7 @@ package me.onebone.actaeon.hook;
 
 
 import cn.nukkit.Server;
-import me.onebone.actaeon.Utils.Utils;
+import me.onebone.actaeon.util.Utils;
 import me.onebone.actaeon.entity.MovingEntity;
 import me.onebone.actaeon.task.ChickenEggTask;
 
