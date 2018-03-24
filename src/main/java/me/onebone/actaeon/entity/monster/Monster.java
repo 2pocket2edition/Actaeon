@@ -13,14 +13,10 @@
 
 package me.onebone.actaeon.entity.monster;
 
-import cn.nukkit.Player;
-import cn.nukkit.entity.Attribute;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityAgeable;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import cn.nukkit.network.protocol.AddEntityPacket;
-import cn.nukkit.network.protocol.UpdateAttributesPacket;
 import me.onebone.actaeon.entity.MovingEntity;
 
 abstract public class Monster extends MovingEntity implements EntityAgeable {

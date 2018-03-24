@@ -32,8 +32,8 @@ public class StrollingTargetFinder extends TargetFinder {
     public int needFind = new Random().nextInt(3);
     public int needFindResetMax = 8;
     public int needFindResetUntil = 0;
-    private double radius;
     public int findHighest = -1;  //<0为关闭寻找最高，0为至虚空，>0为向下方块格数限制
+    private double radius;
 
     public StrollingTargetFinder(MovingEntity entity) {
         this(entity, 5);

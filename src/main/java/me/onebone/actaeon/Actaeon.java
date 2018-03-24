@@ -17,11 +17,7 @@ import cn.nukkit.entity.Entity;
 import cn.nukkit.item.Item;
 import cn.nukkit.plugin.PluginBase;
 import me.onebone.actaeon.entity.MovingEntity;
-import me.onebone.actaeon.entity.animal.Chicken;
-import me.onebone.actaeon.entity.animal.Cow;
-import me.onebone.actaeon.entity.animal.Pig;
-import me.onebone.actaeon.entity.animal.Sheep;
-import me.onebone.actaeon.entity.animal.Wolf;
+import me.onebone.actaeon.entity.animal.*;
 import me.onebone.actaeon.entity.monster.Zombie;
 import me.onebone.actaeon.runnable.TaskWatchDog;
 

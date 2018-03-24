@@ -58,6 +58,11 @@ public abstract class EntityTameable extends Animal implements EntityOwnable {
         return ownerInstance;
     }
 
+    public void setOwner(Player p) {
+        this.ownerInstance = p;
+        this.owner = p.getName();
+    }
+
     @Override
     public String getOwnerName() {
         return owner;
@@ -66,11 +71,6 @@ public abstract class EntityTameable extends Animal implements EntityOwnable {
     @Override
     public void setOwnerName(String owner) {
         this.owner = owner;
-    }
-
-    public void setOwner(Player p) {
-        this.ownerInstance = p;
-        this.owner = p.getName();
     }
 
     public boolean isOwner(Player player) {

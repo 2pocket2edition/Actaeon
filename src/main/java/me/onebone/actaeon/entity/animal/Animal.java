@@ -14,13 +14,10 @@
 package me.onebone.actaeon.entity.animal;
 
 import cn.nukkit.Player;
-import cn.nukkit.entity.Attribute;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import cn.nukkit.network.protocol.AddEntityPacket;
-import cn.nukkit.network.protocol.UpdateAttributesPacket;
 import me.onebone.actaeon.entity.EntityAgeable;
 import me.onebone.actaeon.util.Utils;
 

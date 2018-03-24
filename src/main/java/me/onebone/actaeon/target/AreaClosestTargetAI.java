@@ -13,7 +13,6 @@
 
 package me.onebone.actaeon.target;
 
-import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.math.SimpleAxisAlignedBB;
 import me.onebone.actaeon.entity.MovingEntity;

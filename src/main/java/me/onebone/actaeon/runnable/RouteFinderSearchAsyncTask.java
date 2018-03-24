@@ -30,19 +30,18 @@ import me.onebone.actaeon.route.RouteFinder;
  */
 public class RouteFinderSearchAsyncTask extends AsyncTask {
 
+    public Thread thread;
+    public long started;
     private RouteFinder route;
     private int retryTimes = 0;
     private Level level = null;
     private Vector3 start = null;
     private Vector3 dest = null;
-    private AxisAlignedBB bb = null;
-    public Thread thread;
 
     /*public RouteFinderSearchAsyncTask(RouteFinder route) {
         this(route, null, null, null, null);
     }*/
-
-    public long started;
+    private AxisAlignedBB bb = null;
 
     public RouteFinderSearchAsyncTask(RouteFinder route, Level level, Vector3 start, Vector3 dest, AxisAlignedBB bb) {
         this.route = route;

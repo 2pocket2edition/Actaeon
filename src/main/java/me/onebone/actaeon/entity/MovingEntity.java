@@ -39,13 +39,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 abstract public class MovingEntity extends EntityCreature {
+    public boolean routeLeading = true;
     private boolean isKnockback = false;
     private RouteFinder route = null;
     private TargetFinder targetFinder = null;
     private Vector3 target = null;
     private Entity hate = null;
     private String targetSetter = "";
-    public boolean routeLeading = true;
     private Map<String, MovingEntityHook> hooks = new HashMap<>();
     private MovingEntityTask task = null;
     private boolean lookAtFront = true;
@@ -307,12 +307,12 @@ abstract public class MovingEntity extends EntityCreature {
         super.knockBack(attacker, damage, x, z, base / 2);
     }
 
-    public void setRoute(RouteFinder route) {
-        this.route = route;
-    }
-
     public RouteFinder getRoute() {
         return route;
+    }
+
+    public void setRoute(RouteFinder route) {
+        this.route = route;
     }
 
     public TargetFinder getTargetFinder() {

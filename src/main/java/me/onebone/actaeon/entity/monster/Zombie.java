@@ -68,7 +68,7 @@ public class Zombie extends Monster implements EntityAgeable, Fallable, Climbabl
 
     @Override
     public Item[] getDrops() {
-        return new Item[]   {
+        return new Item[]{
                 Item.get(Item.ROTTEN_FLESH, 0, Utils.rand(0, 3)),
                 Item.get(Item.IRON_INGOT, 0, Math.max(0, Utils.rand(-50, 1))),
                 Item.get(Item.CARROT, 0, Math.max(0, Utils.rand(-50, 1))),

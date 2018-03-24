@@ -25,12 +25,10 @@ public class Node extends Vector3 {
     private static final long X_MASK = (1L << NUM_X_BITS) - 1L;
     private static final long Y_MASK = (1L << NUM_Y_BITS) - 1L;
     private static final long Z_MASK = (1L << NUM_Z_BITS) - 1L;
-
-    private Node parent = null;
     public boolean closed = false;
-
     public double f = -1;
     public double g = -1;
+    private Node parent = null;
 
     public Node(double x, double y, double z) {
         super(x, y, z);
@@ -40,24 +38,24 @@ public class Node extends Vector3 {
         super(vec.x, vec.y, vec.z);
     }
 
-    public String toString() {
-        return "Node (x=" + this.x + ", y=" + this.y + ", " + this.z + ")";
+    public static long toLong(long x, long y, long z) {
+        return (x & X_MASK) << X_SHIFT | (y & Y_MASK) << Y_SHIFT | (z & Z_MASK);
     }
 
-    public void setParent(Node node) {
-        this.parent = node;
+    public String toString() {
+        return "Node (x=" + this.x + ", y=" + this.y + ", " + this.z + ")";
     }
 
     public Node getParent() {
         return this.parent;
     }
 
-    public long toLong() {
-        return toLong((long) this.x, (long) this.y, (long) this.z);
+    public void setParent(Node node) {
+        this.parent = node;
     }
 
-    public static long toLong(long x, long y, long z)  {
-        return (x & X_MASK) << X_SHIFT | (y & Y_MASK) << Y_SHIFT | (z & Z_MASK);
+    public long toLong() {
+        return toLong((long) this.x, (long) this.y, (long) this.z);
     }
 
     public boolean equals(Node node) {

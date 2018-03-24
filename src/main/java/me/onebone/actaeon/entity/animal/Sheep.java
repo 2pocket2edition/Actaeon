@@ -19,8 +19,6 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import me.onebone.actaeon.hook.AnimalHook;
 import me.onebone.actaeon.util.Utils;
 
-import java.util.Random;
-
 public class Sheep extends Animal {
     public static final int NETWORK_ID = 13;
 
@@ -57,10 +55,10 @@ public class Sheep extends Animal {
 
     @Override
     public Item[] getDrops() {
-        if (isBaby())   {
+        if (isBaby()) {
             return new Item[0];
         } else {
-            return new Item[]   {
+            return new Item[]{
                     Item.get(Item.WOOL, 0, 1),
                     Item.get(this.isOnFire() ? Item.COOKED_MUTTON : Item.RAW_MUTTON, 0, Utils.rand(1, 3))
             };

@@ -15,15 +15,12 @@ package me.onebone.actaeon.entity.animal;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.EntityAgeable;
-import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import me.onebone.actaeon.util.Utils;
 import me.onebone.actaeon.hook.AnimalGrowHook;
 import me.onebone.actaeon.hook.AnimalHook;
-
-import java.util.Random;
+import me.onebone.actaeon.util.Utils;
 
 public class Cow extends Animal implements EntityAgeable {
     public static final int NETWORK_ID = 11;

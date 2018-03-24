@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RouteFinder {
-    private int current = 0;
+    public long stopRouteFindUntil = System.currentTimeMillis();
+    public volatile Thread thread;
     protected Vector3 destination = null, start = null;
-    private boolean arrived = false;
     protected List<Node> nodes = new ArrayList<>();
     protected Level level = null;
     protected AxisAlignedBB aabb = null;
@@ -33,8 +33,8 @@ public abstract class RouteFinder {
     protected MovingEntity entity = null;
 
     protected boolean forceStop = false;
-    public long stopRouteFindUntil = System.currentTimeMillis();
-    public volatile Thread thread;
+    private int current = 0;
+    private boolean arrived = false;
 
     public RouteFinder(MovingEntity entity) {
         if (entity == null) throw new IllegalArgumentException("Entity cannot be null");
@@ -53,16 +53,22 @@ public abstract class RouteFinder {
         this.setBoundingBox(bb);
     }
 
+    public Vector3 getStart() {
+        if (start == null) return null;
+
+        return new Vector3(start.x, start.y, start.z);
+    }
+
     public void setStart(Vector3 start) {
         if (start == null) throw new IllegalArgumentException("Cannot set start as null");
 
         this.start = new Vector3(start.x, start.y, start.z);
     }
 
-    public Vector3 getStart() {
-        if (start == null) return null;
+    public Vector3 getDestination() {
+        if (destination == null) return null;
 
-        return new Vector3(start.x, start.y, start.z);
+        return new Vector3(destination.x, destination.y, destination.z);
     }
 
     public void setDestination(Vector3 destination) {
@@ -74,10 +80,8 @@ public abstract class RouteFinder {
         this.destination = new Vector3(destination.x, destination.y, destination.z);
     }
 
-    public Vector3 getDestination() {
-        if (destination == null) return null;
-
-        return new Vector3(destination.x, destination.y, destination.z);
+    public Level getLevel() {
+        return this.level;
     }
 
     public void setLevel(Level level) {
@@ -86,8 +90,10 @@ public abstract class RouteFinder {
         this.level = level;
     }
 
-    public Level getLevel() {
-        return this.level;
+    public AxisAlignedBB getBoundingBox() {
+        if (this.aabb == null) return new SimpleAxisAlignedBB(0, 0, 0, 0, 0, 0);
+
+        return this.aabb.clone();
     }
 
     public void setBoundingBox(AxisAlignedBB bb) {
@@ -96,12 +102,6 @@ public abstract class RouteFinder {
         }
 
         this.aabb = bb;
-    }
-
-    public AxisAlignedBB getBoundingBox() {
-        if (this.aabb == null) return new SimpleAxisAlignedBB(0, 0, 0, 0, 0, 0);
-
-        return this.aabb.clone();
     }
 
     protected void resetNodes() {
