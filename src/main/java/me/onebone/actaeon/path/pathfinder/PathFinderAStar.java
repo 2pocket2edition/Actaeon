@@ -11,7 +11,7 @@
  *
  */
 
-package me.onebone.actaeon.route;
+package me.onebone.actaeon.path.pathfinder;
 
 import cn.nukkit.block.Block;
 import cn.nukkit.math.Vector3;
@@ -20,10 +20,13 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import me.onebone.actaeon.entity.attribute.IClimbable;
 import me.onebone.actaeon.entity.attribute.IFallable;
 import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.path.Node;
+import me.onebone.actaeon.path.PathFinder;
+import me.onebone.actaeon.path.WalkableIterator;
 
 import java.util.*;
 
-public class AdvancedRouteFinder extends RouteFinder {
+public class PathFinderAStar extends PathFinder {
     private boolean succeed = false, searching = false;
 
     private Vector3 realDestination = null;
@@ -32,7 +35,7 @@ public class AdvancedRouteFinder extends RouteFinder {
 
     private Grid grid = new Grid();
 
-    public AdvancedRouteFinder(MovingEntity entity) {
+    public PathFinderAStar(MovingEntity entity) {
         super(entity);
         this.setLevel(entity.getLevel());
     }
@@ -256,9 +259,7 @@ public class AdvancedRouteFinder extends RouteFinder {
 
 
     @Override
-    public boolean research() {
-        this.resetNodes();
-
+    public boolean reSearch() {
         return this.search();
     }
 

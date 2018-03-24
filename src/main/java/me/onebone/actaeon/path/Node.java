@@ -11,7 +11,7 @@
  *
  */
 
-package me.onebone.actaeon.route;
+package me.onebone.actaeon.path;
 
 import cn.nukkit.math.MathHelper;
 import cn.nukkit.math.Vector3;

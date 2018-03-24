@@ -41,12 +41,12 @@ public class AreaHandItemTargetAI extends TargetFinder {
             }
         }
 
-        if (near != null) {
-            this.getEntity().setTarget(near, this.getEntity().getName());
-            this.getEntity().setHate(near);
-        } else {
+        if (near == null) {
             //this.getEntity().getRoute().forceStop();
             this.getEntity().setTarget(null, this.getEntity().getName());
+        } else {
+            this.getEntity().setTarget(near, this.getEntity().getName());
+            this.getEntity().setHate(near);
         }
     }
 }

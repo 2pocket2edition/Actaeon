@@ -18,7 +18,7 @@ import cn.nukkit.level.Level;
 import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.scheduler.AsyncTask;
-import me.onebone.actaeon.route.RouteFinder;
+import me.onebone.actaeon.path.PathFinder;
 
 /**
  * RouteFinderSearchAsyncTask
@@ -32,18 +32,18 @@ public class RouteFinderSearchAsyncTask extends AsyncTask {
 
     public Thread thread;
     public long started;
-    private RouteFinder route;
+    private PathFinder route;
     private int retryTimes = 0;
     private Level level = null;
     private Vector3 start = null;
     private Vector3 dest = null;
 
-    /*public RouteFinderSearchAsyncTask(RouteFinder route) {
+    /*public RouteFinderSearchAsyncTask(PathFinder route) {
         this(route, null, null, null, null);
     }*/
     private AxisAlignedBB bb = null;
 
-    public RouteFinderSearchAsyncTask(RouteFinder route, Level level, Vector3 start, Vector3 dest, AxisAlignedBB bb) {
+    public RouteFinderSearchAsyncTask(PathFinder route, Level level, Vector3 start, Vector3 dest, AxisAlignedBB bb) {
         this.route = route;
         this.level = level;
         this.start = start.clone();

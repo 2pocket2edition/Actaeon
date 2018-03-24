@@ -11,11 +11,12 @@
  *
  */
 
-package me.onebone.actaeon.route;
+package me.onebone.actaeon.path;
 
 import cn.nukkit.block.Block;
 import cn.nukkit.level.Level;
 import cn.nukkit.math.Vector3;
+import me.onebone.actaeon.path.pathfinder.PathFinderAStar;
 
 import java.util.Iterator;
 
@@ -33,10 +34,10 @@ public class WalkableIterator implements Iterator<Block> {
     private Vector3 currentPosition = null;
     private Vector3 direction = null;
 
-    private AdvancedRouteFinder advancedRouteFinder;
+    private PathFinderAStar pathFinderAStar;
 
-    public WalkableIterator(AdvancedRouteFinder advancedRouteFinder, Level level, Vector3 start, Vector3 direction, double width, int maxDistance) {
-        this.advancedRouteFinder = advancedRouteFinder;
+    public WalkableIterator(PathFinderAStar pathFinderAStar, Level level, Vector3 start, Vector3 direction, double width, int maxDistance) {
+        this.pathFinderAStar = pathFinderAStar;
         this.level = level;
         this.width = width;
         this.maxDistance = maxDistance == 0 ? 120 : maxDistance;
@@ -72,7 +73,7 @@ public class WalkableIterator implements Iterator<Block> {
             //if (this.currentDistance > 2 && new Random().nextInt(100) < 35) this.level.addParticle(new FlameParticle(this.currentPosition));
             Block block = this.level.getBlock(this.currentPosition);
             Vector3 next = this.currentPosition.add(this.direction);
-            double walkable = this.advancedRouteFinder.isWalkableAt(block);
+            double walkable = this.pathFinderAStar.isWalkableAt(block);
             if (walkable != 0 || (block.getBoundingBox() != null && block.getBoundingBox().calculateIntercept(this.currentPosition, next) != null)) {
                 this.currentBlockObject = block;
                 this.end = true;

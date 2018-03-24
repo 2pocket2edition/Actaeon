@@ -26,9 +26,9 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.AddEntityPacket;
 import cn.nukkit.network.protocol.UpdateAttributesPacket;
 import me.onebone.actaeon.hook.MovingEntityHook;
-import me.onebone.actaeon.route.AdvancedRouteFinder;
-import me.onebone.actaeon.route.Node;
-import me.onebone.actaeon.route.RouteFinder;
+import me.onebone.actaeon.path.pathfinder.PathFinderAStar;
+import me.onebone.actaeon.path.Node;
+import me.onebone.actaeon.path.PathFinder;
 import me.onebone.actaeon.runnable.RouteFinderSearchAsyncTask;
 import me.onebone.actaeon.target.TargetFinder;
 import me.onebone.actaeon.task.MovingEntityTask;
@@ -41,7 +41,7 @@ import java.util.Map;
 abstract public class MovingEntity extends EntityCreature {
     public boolean routeLeading = true;
     private boolean isKnockback = false;
-    private RouteFinder route = null;
+    private PathFinder route = null;
     private TargetFinder targetFinder = null;
     private Vector3 target = null;
     private Entity hate = null;
@@ -53,8 +53,8 @@ abstract public class MovingEntity extends EntityCreature {
     public MovingEntity(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
 
-        this.route = new AdvancedRouteFinder(this);
-        //this.route = new SimpleRouteFinder(this);
+        this.route = new PathFinderAStar(this);
+        //this.route = new PathFinderDirect(this);
         this.setImmobile(false);
     }
 
@@ -134,7 +134,7 @@ abstract public class MovingEntity extends EntityCreature {
         if (this.routeLeading && this.onGround && this.hasSetTarget() && !this.route.isSearching() && System.currentTimeMillis() >= this.route.stopRouteFindUntil && (this.route.getDestination() == null || this.route.getDestination().distance(this.getTarget()) > 2)) { // 대상이 이동함
             Server.getInstance().getScheduler().scheduleAsyncTask(new RouteFinderSearchAsyncTask(this.route, this.level, this, this.getTarget(), this.boundingBox));
 
-			/*if(this.route.isSearching()) this.route.research();
+			/*if(this.route.isSearching()) this.route.reSearch();
             else this.route.search();*/
 
             hasUpdate = true;
@@ -217,7 +217,7 @@ abstract public class MovingEntity extends EntityCreature {
         if (this.hasSetTarget() && (forceSearch || !this.route.hasRoute())) {
             this.route.forceStop();
             Server.getInstance().getScheduler().scheduleAsyncTask(new RouteFinderSearchAsyncTask(this.route, this.level, this, this.getTarget(), this.boundingBox.clone()));
-			/*if(this.route.isSearching()) this.route.research();
+			/*if(this.route.isSearching()) this.route.reSearch();
 			else this.route.search();*/
         }
     }
@@ -307,11 +307,11 @@ abstract public class MovingEntity extends EntityCreature {
         super.knockBack(attacker, damage, x, z, base / 2);
     }
 
-    public RouteFinder getRoute() {
+    public PathFinder getRoute() {
         return route;
     }
 
-    public void setRoute(RouteFinder route) {
+    public void setRoute(PathFinder route) {
         this.route = route;
     }
 

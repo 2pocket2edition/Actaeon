@@ -11,7 +11,7 @@
  *
  */
 
-package me.onebone.actaeon.route;
+package me.onebone.actaeon.path;
 
 import cn.nukkit.level.Level;
 import cn.nukkit.math.AxisAlignedBB;
@@ -22,7 +22,7 @@ import me.onebone.actaeon.entity.MovingEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class RouteFinder {
+public abstract class PathFinder {
     public long stopRouteFindUntil = System.currentTimeMillis();
     public volatile Thread thread;
     protected Vector3 destination = null, start = null;
@@ -36,7 +36,7 @@ public abstract class RouteFinder {
     private int current = 0;
     private boolean arrived = false;
 
-    public RouteFinder(MovingEntity entity) {
+    public PathFinder(MovingEntity entity) {
         if (entity == null) throw new IllegalArgumentException("Entity cannot be null");
 
         this.entity = entity;
@@ -201,7 +201,7 @@ public abstract class RouteFinder {
      *
      * @return true if finding path is done.
      */
-    public abstract boolean research();
+    public abstract boolean reSearch();
 
     /**
      * @return true if searching is not end

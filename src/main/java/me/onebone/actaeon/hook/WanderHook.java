@@ -21,8 +21,6 @@ import me.onebone.actaeon.util.Utils;
  * Created by CreeperFace on 19.7.2017.
  */
 public class WanderHook extends MovingEntityHook {
-
-    private boolean update = false;
     private int chance;
 
     public WanderHook(MovingEntity entity) {

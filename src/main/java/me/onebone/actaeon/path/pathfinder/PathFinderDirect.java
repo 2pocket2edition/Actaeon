@@ -11,12 +11,14 @@
  *
  */
 
-package me.onebone.actaeon.route;
+package me.onebone.actaeon.path.pathfinder;
 
 import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.path.Node;
+import me.onebone.actaeon.path.PathFinder;
 
-public class SimpleRouteFinder extends RouteFinder {
-    public SimpleRouteFinder(MovingEntity entity) {
+public class PathFinderDirect extends PathFinder {
+    public PathFinderDirect(MovingEntity entity) {
         super(entity);
     }
 
@@ -31,7 +33,7 @@ public class SimpleRouteFinder extends RouteFinder {
     }
 
     @Override
-    public boolean research() {
+    public boolean reSearch() {
         return this.search();
     }
 
