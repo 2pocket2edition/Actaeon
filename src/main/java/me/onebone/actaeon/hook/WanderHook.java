@@ -14,7 +14,7 @@
 package me.onebone.actaeon.hook;
 
 import cn.nukkit.math.Vector3;
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 import me.onebone.actaeon.util.Utils;
 
 /**

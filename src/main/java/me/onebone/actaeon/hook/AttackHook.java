@@ -14,7 +14,7 @@
 package me.onebone.actaeon.hook;
 
 import cn.nukkit.entity.Entity;
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 import me.onebone.actaeon.task.attack.AttackTask;
 import me.onebone.actaeon.util.Utils;
 import me.onebone.actaeon.util.function.AttackTaskProvider;

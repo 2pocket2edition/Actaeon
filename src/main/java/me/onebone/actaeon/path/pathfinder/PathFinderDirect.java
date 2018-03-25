@@ -13,7 +13,7 @@
 
 package me.onebone.actaeon.path.pathfinder;
 
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 import me.onebone.actaeon.path.Node;
 import me.onebone.actaeon.path.PathFinder;
 

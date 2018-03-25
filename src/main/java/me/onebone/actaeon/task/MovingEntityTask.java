@@ -13,7 +13,7 @@
 
 package me.onebone.actaeon.task;
 
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 
 /**
  * MovingEntityTask

@@ -16,8 +16,7 @@ package me.onebone.actaeon.target;
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.item.Item;
-import me.onebone.actaeon.entity.MovingEntity;
-import me.onebone.actaeon.util.Utils;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 
 public class AreaHandItemTargetAI extends WanderTargetAI {
     private Item item;

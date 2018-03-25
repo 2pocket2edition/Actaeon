@@ -15,7 +15,7 @@ package me.onebone.actaeon.target;
 
 import cn.nukkit.entity.Entity;
 import cn.nukkit.math.SimpleAxisAlignedBB;
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 
 /**
  * Created by CreeperFace on 19.7.2017.

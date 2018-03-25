@@ -11,7 +11,7 @@
  *
  */
 
-package me.onebone.actaeon.entity.monster;
+package me.onebone.actaeon.entity.impl.monster;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.EntityAgeable;
@@ -21,6 +21,7 @@ import cn.nukkit.item.ItemBow;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.MobEquipmentPacket;
+import me.onebone.actaeon.entity.heirachy.type.Monster;
 import me.onebone.actaeon.hook.AttackHook;
 import me.onebone.actaeon.hook.WanderHook;
 import me.onebone.actaeon.target.AreaPlayerTargetAI;

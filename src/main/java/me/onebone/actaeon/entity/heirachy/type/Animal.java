@@ -11,28 +11,45 @@
  *
  */
 
-package me.onebone.actaeon.entity;
+package me.onebone.actaeon.entity.heirachy.type;
 
+import cn.nukkit.Player;
+import cn.nukkit.entity.Entity;
+import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import me.onebone.actaeon.hook.AnimalGrowHook;
+import me.onebone.actaeon.entity.heirachy.EntityAgeable;
 import me.onebone.actaeon.util.Utils;
 
-/**
- * @author CreeperFace
- */
-public abstract class EntityAgeable extends MovingEntity implements cn.nukkit.entity.EntityAgeable {
+abstract public class Animal extends EntityAgeable {
 
-    public EntityAgeable(FullChunk chunk, CompoundTag nbt) {
+    protected Player inLovePlayer;
+    protected int inLoveTicks;
+
+    public Animal(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-
-        if (isBaby()) {
-            this.addHook("grow", new AnimalGrowHook(this, Utils.rand(20 * 60 * 10, 20 * 60 * 20)));
-        }
     }
 
     @Override
     public boolean isBaby() {
-        return false;
+        return this.getDataFlag(DATA_FLAGS, Entity.DATA_FLAG_BABY);
+    }
+
+    @Override
+    public boolean entityBaseTick(int tickDiff) {
+        boolean hasUpdate = super.entityBaseTick(tickDiff);
+
+        //TODO: taming
+
+        return hasUpdate;
+    }
+
+    public boolean isBreedingItem(Item item) {
+        return item.getId() == Item.WHEAT;
+    }
+
+    @Override
+    public int getXp() {
+        return Utils.rand(1, 4);
     }
 }

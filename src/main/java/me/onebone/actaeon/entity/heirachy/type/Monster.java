@@ -11,13 +11,13 @@
  *
  */
 
-package me.onebone.actaeon.entity.monster;
+package me.onebone.actaeon.entity.heirachy.type;
 
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityAgeable;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 import me.onebone.actaeon.entity.attribute.IHostile;
 
 abstract public class Monster extends MovingEntity implements EntityAgeable, IHostile {

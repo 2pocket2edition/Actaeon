@@ -19,7 +19,7 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import me.onebone.actaeon.entity.attribute.IClimbable;
 import me.onebone.actaeon.entity.attribute.IFallable;
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 import me.onebone.actaeon.path.Node;
 import me.onebone.actaeon.path.PathFinder;
 import me.onebone.actaeon.path.WalkableIterator;

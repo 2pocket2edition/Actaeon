@@ -20,7 +20,7 @@ import cn.nukkit.block.BlockGrass;
 import cn.nukkit.block.BlockTallGrass;
 import cn.nukkit.level.particle.DestroyBlockParticle;
 import cn.nukkit.network.protocol.EntityEventPacket;
-import me.onebone.actaeon.entity.animal.Animal;
+import me.onebone.actaeon.entity.heirachy.type.Animal;
 import me.onebone.actaeon.util.Utils;
 
 /**

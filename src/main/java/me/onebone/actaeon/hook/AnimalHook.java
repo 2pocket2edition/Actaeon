@@ -15,7 +15,7 @@ package me.onebone.actaeon.hook;
 
 import cn.nukkit.Player;
 import cn.nukkit.item.Item;
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 import me.onebone.actaeon.target.AreaHandItemTargetAI;
 
 public class AnimalHook extends WanderHook {

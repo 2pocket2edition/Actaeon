@@ -1,7 +1,7 @@
 package me.onebone.actaeon.util.function;
 
 import cn.nukkit.entity.Entity;
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 import me.onebone.actaeon.task.attack.AttackTask;
 
 /**

@@ -11,7 +11,7 @@
  *
  */
 
-package me.onebone.actaeon.entity;
+package me.onebone.actaeon.entity.heirachy;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;

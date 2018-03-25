@@ -11,7 +11,7 @@
  *
  */
 
-package me.onebone.actaeon.entity.animal;
+package me.onebone.actaeon.entity.impl.animal;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.EntityAgeable;
@@ -19,6 +19,7 @@ import cn.nukkit.entity.passive.EntityCow;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+import me.onebone.actaeon.entity.heirachy.type.Animal;
 import me.onebone.actaeon.hook.AnimalGrowHook;
 import me.onebone.actaeon.target.AreaHandItemTargetAI;
 import me.onebone.actaeon.util.Utils;

@@ -14,13 +14,12 @@
 package me.onebone.actaeon;
 
 import cn.nukkit.entity.Entity;
-import cn.nukkit.item.Item;
 import cn.nukkit.plugin.PluginBase;
-import me.onebone.actaeon.entity.MovingEntity;
-import me.onebone.actaeon.entity.animal.*;
-import me.onebone.actaeon.entity.monster.Creeper;
-import me.onebone.actaeon.entity.monster.Skeleton;
-import me.onebone.actaeon.entity.monster.Zombie;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
+import me.onebone.actaeon.entity.impl.animal.*;
+import me.onebone.actaeon.entity.impl.monster.Creeper;
+import me.onebone.actaeon.entity.impl.monster.Skeleton;
+import me.onebone.actaeon.entity.impl.monster.Zombie;
 import me.onebone.actaeon.runnable.TaskWatchDog;
 
 public class Actaeon extends PluginBase {

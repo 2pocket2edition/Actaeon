@@ -14,7 +14,7 @@
 package me.onebone.actaeon.hook;
 
 import cn.nukkit.event.entity.EntityDamageEvent;
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 
 /**
  * ECPlayerBotHook

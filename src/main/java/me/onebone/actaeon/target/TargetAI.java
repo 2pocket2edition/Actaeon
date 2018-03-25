@@ -13,7 +13,7 @@
 
 package me.onebone.actaeon.target;
 
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 
 public abstract class TargetAI {
     protected MovingEntity entity = null;

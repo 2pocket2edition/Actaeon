@@ -15,7 +15,7 @@ package me.onebone.actaeon.target;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 
 /**
  * Targets all players in the area that are in survival mode or adventure

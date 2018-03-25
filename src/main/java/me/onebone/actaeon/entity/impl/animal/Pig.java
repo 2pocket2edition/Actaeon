@@ -11,21 +11,25 @@
  *
  */
 
-package me.onebone.actaeon.entity.animal;
+package me.onebone.actaeon.entity.impl.animal;
 
-import cn.nukkit.entity.passive.EntitySheep;
+import cn.nukkit.entity.EntityAgeable;
+import cn.nukkit.entity.passive.EntityPig;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+import me.onebone.actaeon.entity.heirachy.type.Animal;
+import me.onebone.actaeon.hook.AnimalGrowHook;
 import me.onebone.actaeon.target.AreaHandItemTargetAI;
 import me.onebone.actaeon.util.Utils;
 
-public class Sheep extends Animal {
-    public static final int NETWORK_ID = EntitySheep.NETWORK_ID;
+public class Pig extends Animal implements EntityAgeable {
+    public static final int NETWORK_ID = EntityPig.NETWORK_ID;
+    private boolean isBaby = false;
 
-    public Sheep(FullChunk chunk, CompoundTag nbt) {
+    public Pig(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-        this.setTargetAI(new AreaHandItemTargetAI(this, 500, Item.get(Item.WHEAT), 10));
+        this.setTargetAI(new AreaHandItemTargetAI(this, 500, Item.get(Item.CARROT), 10));
     }
 
     @Override
@@ -38,15 +42,20 @@ public class Sheep extends Animal {
         if (isBaby()) {
             return 0.9f; // No have information
         }
-        return 1.3f;
+        return 0.9f;
     }
 
     @Override
     public float getEyeHeight() {
         if (isBaby()) {
-            return 0.95f * 0.9f; // No have information
+            return 0.9f; // No have information
         }
-        return 0.95f * getHeight();
+        return 0.9f;
+    }
+
+    @Override
+    public boolean entityBaseTick(int tickDiff) {
+        return super.entityBaseTick(tickDiff);
     }
 
     @Override
@@ -56,14 +65,9 @@ public class Sheep extends Animal {
 
     @Override
     public Item[] getDrops() {
-        if (isBaby()) {
-            return new Item[0];
-        } else {
-            return new Item[]{
-                    Item.get(Item.WOOL, 0, 1),
-                    Item.get(this.isOnFire() ? Item.COOKED_MUTTON : Item.RAW_MUTTON, 0, Utils.rand(1, 3))
-            };
-        }
+        return new Item[]{
+                Item.get(this.isOnFire() ? Item.COOKED_PORKCHOP : Item.RAW_PORKCHOP, 0, Utils.rand(1, 4))
+        };
     }
 
     @Override
@@ -72,13 +76,25 @@ public class Sheep extends Animal {
     }
 
     @Override
-    public boolean entityBaseTick(int tickDiff) {
-        return super.entityBaseTick(tickDiff);
+    protected void initEntity() {
+        super.initEntity();
+        setMaxHealth(10);
+        isBaby = Utils.rand(1, 11) == 1;
+        setBaby(isBaby);
+        if (isBaby) {
+            this.addHook("grow", new AnimalGrowHook(this, Utils.rand(20 * 60 * 10, 20 * 60 * 20)));
+        }
     }
 
     @Override
-    protected void initEntity() {
-        super.initEntity();
-        this.setMaxHealth(8);
+    public boolean isBaby() {
+        return isBaby;
+    }
+
+    @Override
+    public boolean isBreedingItem(Item item) {
+        int id = item.getId();
+
+        return id == Item.POTATO || id == Item.CARROT || id == Item.BEETROOT;
     }
 }

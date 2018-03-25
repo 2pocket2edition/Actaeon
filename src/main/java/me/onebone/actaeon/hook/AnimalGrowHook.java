@@ -14,7 +14,7 @@
 package me.onebone.actaeon.hook;
 
 import cn.nukkit.Server;
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 
 public class AnimalGrowHook extends MovingEntityHook {
     private int growTick;

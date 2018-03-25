@@ -15,7 +15,7 @@ package me.onebone.actaeon.task;
 
 import cn.nukkit.item.Item;
 import cn.nukkit.math.Vector3;
-import me.onebone.actaeon.entity.MovingEntity;
+import me.onebone.actaeon.entity.heirachy.MovingEntity;
 
 public class ChickenEggTask extends MovingEntityTask {
 

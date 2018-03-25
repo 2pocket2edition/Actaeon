@@ -11,13 +11,13 @@
  *
  */
 
-package me.onebone.actaeon.entity;
+package me.onebone.actaeon.entity.heirachy;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.EntityOwnable;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import me.onebone.actaeon.entity.animal.Animal;
+import me.onebone.actaeon.entity.heirachy.type.Animal;
 
 /**
  * @author CreeperFace

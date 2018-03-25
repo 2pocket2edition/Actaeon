@@ -11,71 +11,60 @@
  *
  */
 
-package me.onebone.actaeon.entity.monster;
+package me.onebone.actaeon.entity.impl.animal;
 
-import cn.nukkit.entity.EntityAgeable;
-import cn.nukkit.entity.mob.EntityZombie;
+import cn.nukkit.entity.passive.EntitySheep;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import me.onebone.actaeon.hook.AttackHook;
-import me.onebone.actaeon.hook.WanderHook;
-import me.onebone.actaeon.target.AreaPlayerTargetAI;
+import me.onebone.actaeon.entity.heirachy.type.Animal;
+import me.onebone.actaeon.target.AreaHandItemTargetAI;
 import me.onebone.actaeon.util.Utils;
 
-public class Zombie extends Monster implements EntityAgeable {
-    public static final int NETWORK_ID = EntityZombie.NETWORK_ID;
+public class Sheep extends Animal {
+    public static final int NETWORK_ID = EntitySheep.NETWORK_ID;
 
-    public Zombie(FullChunk chunk, CompoundTag nbt) {
+    public Sheep(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-        this.setTargetAI(new AreaPlayerTargetAI(this, 500, 32));
-        this.addHook("attack", new AttackHook(this, this.getAttackDistance(), this.getDamage(), 1000, 10, 180));
-        this.addHook("wander", new WanderHook(this));
+        this.setTargetAI(new AreaHandItemTargetAI(this, 500, Item.get(Item.WHEAT), 10));
     }
 
     @Override
     public float getWidth() {
-        return 0.6f;
-    }
-
-    @Override
-    public float getLength() {
-        return 0.6f;
-    }
-
-    @Override
-    protected float getGravity() {
-        return 0.05f;
+        return 0.9f;
     }
 
     @Override
     public float getHeight() {
         if (isBaby()) {
-            return 0.8f;
+            return 0.9f; // No have information
         }
-        return 1.8f;
+        return 1.3f;
     }
 
     @Override
     public float getEyeHeight() {
         if (isBaby()) {
-            return 0.51f;
+            return 0.95f * 0.9f; // No have information
         }
-        return 0.7f;
+        return 0.95f * getHeight();
+    }
+
+    @Override
+    public String getName() {
+        return this.getNameTag();
     }
 
     @Override
     public Item[] getDrops() {
-        return new Item[]{
-                Item.get(Item.ROTTEN_FLESH, 0, Utils.rand(0, 3)),
-                Item.get(Item.IRON_INGOT, 0, Math.max(0, Utils.rand(-50, 1))),
-                Item.get(Item.CARROT, 0, Math.max(0, Utils.rand(-50, 1))),
-                Item.get(Item.POTATO, 0, Math.max(0, Utils.rand(-50, 1)))
-        };
-    }
-
-    public double getAttackDistance() {
-        return 1;
+        if (isBaby()) {
+            return new Item[0];
+        } else {
+            return new Item[]{
+                    Item.get(Item.WOOL, 0, 1),
+                    Item.get(this.isOnFire() ? Item.COOKED_MUTTON : Item.RAW_MUTTON, 0, Utils.rand(1, 3))
+            };
+        }
     }
 
     @Override
@@ -84,18 +73,13 @@ public class Zombie extends Monster implements EntityAgeable {
     }
 
     @Override
+    public boolean entityBaseTick(int tickDiff) {
+        return super.entityBaseTick(tickDiff);
+    }
+
+    @Override
     protected void initEntity() {
         super.initEntity();
-        setMaxHealth(20);
-    }
-
-    @Override
-    public boolean isBaby() {
-        return false;
-    }
-
-    @Override
-    public int getXp() {
-        return Utils.rand(1, 4) + (isBaby() ? 7 : 0);
+        this.setMaxHealth(8);
     }
 }
