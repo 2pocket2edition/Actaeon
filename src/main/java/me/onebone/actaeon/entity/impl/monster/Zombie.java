@@ -20,7 +20,6 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import me.onebone.actaeon.entity.heirachy.type.Monster;
 import me.onebone.actaeon.hook.AttackHook;
-import me.onebone.actaeon.hook.WanderHook;
 import me.onebone.actaeon.target.AreaPlayerTargetAI;
 import me.onebone.actaeon.util.Utils;
 
@@ -31,7 +30,6 @@ public class Zombie extends Monster implements EntityAgeable {
         super(chunk, nbt);
         this.setTargetAI(new AreaPlayerTargetAI(this, 500, 32));
         this.addHook("attack", new AttackHook(this, this.getAttackDistance(), this.getDamage(), 1000, 10, 180));
-        this.addHook("wander", new WanderHook(this));
     }
 
     @Override
@@ -42,11 +40,6 @@ public class Zombie extends Monster implements EntityAgeable {
     @Override
     public float getLength() {
         return 0.6f;
-    }
-
-    @Override
-    protected float getGravity() {
-        return 0.05f;
     }
 
     @Override

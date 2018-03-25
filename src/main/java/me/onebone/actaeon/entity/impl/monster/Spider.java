@@ -13,81 +13,58 @@
 
 package me.onebone.actaeon.entity.impl.monster;
 
-import cn.nukkit.Player;
 import cn.nukkit.entity.EntityAgeable;
-import cn.nukkit.entity.mob.EntitySkeleton;
+import cn.nukkit.entity.mob.EntitySpider;
+import cn.nukkit.entity.mob.EntityZombie;
 import cn.nukkit.item.Item;
-import cn.nukkit.item.ItemBow;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import cn.nukkit.network.protocol.MobEquipmentPacket;
+import me.onebone.actaeon.entity.attribute.IClimbable;
 import me.onebone.actaeon.entity.heirachy.type.Monster;
 import me.onebone.actaeon.hook.AttackHook;
 import me.onebone.actaeon.target.AreaPlayerTargetAI;
-import me.onebone.actaeon.task.attack.AttackTaskShoot;
 import me.onebone.actaeon.util.Utils;
 
-/**
- * @author DaPorkchop_
- */
-public class Skeleton extends Monster implements EntityAgeable {
-    public static final int NETWORK_ID = EntitySkeleton.NETWORK_ID;
-    private static final ItemBow BOW = new ItemBow();
+//TODO: be able to follow path up walls
+public class Spider extends Monster implements EntityAgeable, IClimbable {
+    public static final int NETWORK_ID = EntitySpider.NETWORK_ID;
 
-    public Skeleton(FullChunk chunk, CompoundTag nbt) {
+    public Spider(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
         this.setTargetAI(new AreaPlayerTargetAI(this, 500, 32));
-        this.addHook("attack", new AttackHook(this, this.getAttackDistance(), this.getDamage(), 5000, 10, 180, AttackTaskShoot::new));
+        this.addHook("attack", new AttackHook(this, this.getAttackDistance(), this.getDamage(), 1000, 10, 180));
     }
 
     @Override
     public float getWidth() {
-        return 0.6f;
+        return 1.4f;
     }
 
     @Override
     public float getLength() {
-        return 0.6f;
+        return 1.4f;
     }
 
     @Override
     public float getHeight() {
-        if (isBaby()) {
-            return 0.8f;
-        }
-        return 1.8f;
+        return 0.9f;
     }
 
     @Override
     public float getEyeHeight() {
-        if (isBaby()) {
-            return 0.51f;
-        }
-        return 0.7f;
+        return 0.6f;
     }
 
     @Override
     public Item[] getDrops() {
         return new Item[]{
-                Item.get(Item.BONE, 0, Utils.rand(0, 3)),
-                Item.get(Item.ARROW, 0, Utils.rand(0, 3)),
-                Item.get(Item.BOW, 0, Math.max(0, Utils.rand(-10, 1)))
+                Item.get(Item.STRING, 0, Utils.rand(0, 3)),
+                Item.get(Item.SPIDER_EYE, 0, Math.max(0, Utils.rand(-3, 1)))
         };
     }
 
     public double getAttackDistance() {
-        return 16;
-    }
-
-    @Override
-    public void spawnTo(Player player) {
-        super.spawnTo(player);
-
-        MobEquipmentPacket pk = new MobEquipmentPacket();
-        pk.eid = this.getId();
-        pk.item = BOW;
-        pk.hotbarSlot = 9;
-        player.dataPacket(pk);
+        return 1;
     }
 
     @Override

@@ -75,7 +75,8 @@ abstract public class MovingEntity extends EntityCreature {
 
     @Override
     protected float getGravity() {
-        return 0.092f;
+        return 0.08f;
+        //return 0.092f;
     }
 
     public Entity getHate() {
