@@ -20,17 +20,17 @@ import me.onebone.actaeon.entity.MovingEntity;
 /**
  * Created by CreeperFace on 19.7.2017.
  */
-public class AreaClosestTargetAI extends TargetFinder {
+public class AreaClosestTargetAI extends WanderTargetAI {
 
     private int radius;
-    private boolean first = true;
 
     public AreaClosestTargetAI(MovingEntity entity, long interval, int radius) {
         super(entity, interval);
         this.radius = radius;
     }
 
-    protected void find() {
+    @Override
+    protected Entity scan() {
         Entity near = null;
         double nearest = Double.MAX_VALUE;
 
@@ -40,14 +40,6 @@ public class AreaClosestTargetAI extends TargetFinder {
                 nearest = this.getEntity().distance(e);
             }
         }
-
-        if (near == null) {
-            //this.getEntity().getRoute().forceStop();
-            this.getEntity().setTarget(null, this.getEntity().getName());
-        } else {
-            this.getEntity().setTarget(near, this.getEntity().getName(), this.first);
-            this.getEntity().setHate(near);
-        }
-        this.first = false;
+        return near;
     }
 }

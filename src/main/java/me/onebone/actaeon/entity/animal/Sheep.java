@@ -25,7 +25,7 @@ public class Sheep extends Animal {
 
     public Sheep(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-        this.setTargetFinder(new AreaHandItemTargetAI(this, 500, Item.get(Item.WHEAT), 10));
+        this.setTargetAI(new AreaHandItemTargetAI(this, 500, Item.get(Item.WHEAT), 10));
     }
 
     @Override

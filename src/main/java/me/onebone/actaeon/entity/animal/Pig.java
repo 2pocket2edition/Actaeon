@@ -28,7 +28,7 @@ public class Pig extends Animal implements EntityAgeable {
 
     public Pig(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-        this.setTargetFinder(new AreaHandItemTargetAI(this, 500, Item.get(Item.CARROT), 10));
+        this.setTargetAI(new AreaHandItemTargetAI(this, 500, Item.get(Item.CARROT), 10));
     }
 
     @Override

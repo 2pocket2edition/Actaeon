@@ -44,14 +44,14 @@ public class AnimalHook extends WanderHook {
                 }
             }
 
-            if (near != null && entity.getTargetFinder() == null/* && near.getInventory().getItemInHand().equals(this.item, true, false)*/) {
-                entity.setTargetFinder(new AreaHandItemTargetAI(this.entity, interval, item, radius));
+            if (near != null && entity.getTargetAI() == null/* && near.getInventory().getItemInHand().equals(this.item, true, false)*/) {
+                entity.setTargetAI(new AreaHandItemTargetAI(this.entity, interval, item, radius));
             } else {
-                entity.setTargetFinder(null);
+                entity.setTargetAI(null);
             }
         }
 
-        if (entity.getTargetFinder() == null) {
+        if (entity.getTargetAI() == null) {
             super.onUpdate(tick);
         }
     }

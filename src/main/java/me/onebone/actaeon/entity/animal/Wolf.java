@@ -33,7 +33,7 @@ public class Wolf extends EntityTameable {
         super(chunk, nbt);
 
         setMaxHealth(isTamed() ? 20 : 8);
-        this.setTargetFinder(new AreaHandItemTargetAI(this, 500, Item.get(Item.BONE), 10));
+        this.setTargetAI(new AreaHandItemTargetAI(this, 500, Item.get(Item.BONE), 10));
     }
 
     @Override

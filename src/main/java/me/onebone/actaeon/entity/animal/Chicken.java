@@ -30,7 +30,7 @@ public class Chicken extends Animal implements EntityAgeable, IFallable {
 
     public Chicken(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-        this.setTargetFinder(new AreaHandItemTargetAI(this, 500, Item.get(Item.WHEAT_SEEDS), 10));
+        this.setTargetAI(new AreaHandItemTargetAI(this, 500, Item.get(Item.WHEAT_SEEDS), 10));
         this.addHook("egg", new ChickenEggHook(this));
     }
 

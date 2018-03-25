@@ -18,6 +18,7 @@ import cn.nukkit.item.Item;
 import cn.nukkit.plugin.PluginBase;
 import me.onebone.actaeon.entity.MovingEntity;
 import me.onebone.actaeon.entity.animal.*;
+import me.onebone.actaeon.entity.monster.Creeper;
 import me.onebone.actaeon.entity.monster.Skeleton;
 import me.onebone.actaeon.entity.monster.Zombie;
 import me.onebone.actaeon.runnable.TaskWatchDog;
@@ -40,6 +41,7 @@ public class Actaeon extends PluginBase {
         this.registerEntity("Pig", Pig.class);
         this.registerEntity("Wolf", Wolf.class);
 
+        this.registerEntity("Creeper", Creeper.class);
         this.registerEntity("Skeleton", Skeleton.class);
         this.registerEntity("Zombie", Zombie.class);
     }

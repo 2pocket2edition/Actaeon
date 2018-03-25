@@ -54,11 +54,12 @@ public class AttackTask extends MovingEntityTask {
         } else {
             valid = yaw < max && yaw > min;
         }
-        doAttack(valid);
-        this.entity.updateBotTask(null);
+        if (doAttack(valid)) {
+            this.entity.updateBotTask(null);
+        }
     }
 
-    protected void doAttack(boolean valid)  {
+    protected boolean doAttack(boolean valid)  {
         if (valid) {
             if (this.target.noDamageTicks <= 0) {
                 this.target.attack(new EntityDamageByEntityEvent(this.getEntity(), this.target, EntityDamageEvent.DamageCause.ENTITY_ATTACK, this.damage));
@@ -70,6 +71,7 @@ public class AttackTask extends MovingEntityTask {
         pk.eid = this.entity.getId();
         pk.event = 4;
         Server.broadcastPacket(this.getEntity().getViewers().values(), pk);
+        return true;
     }
 
     @Override

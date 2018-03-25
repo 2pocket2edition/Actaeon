@@ -30,12 +30,10 @@ import me.onebone.actaeon.path.pathfinder.PathFinderAStar;
 import me.onebone.actaeon.path.Node;
 import me.onebone.actaeon.path.PathFinder;
 import me.onebone.actaeon.runnable.RouteFinderSearchAsyncTask;
-import me.onebone.actaeon.target.TargetFinder;
+import me.onebone.actaeon.target.TargetAI;
 import me.onebone.actaeon.task.MovingEntityTask;
 import me.onebone.actaeon.util.Utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -43,7 +41,7 @@ abstract public class MovingEntity extends EntityCreature {
     public boolean routeLeading = true;
     private boolean isKnockback = false;
     private PathFinder route = null;
-    private TargetFinder targetFinder = null;
+    private TargetAI targetAI = null;
     private Vector3 target = null;
     private Entity hate = null;
     private String targetSetter = "";
@@ -124,7 +122,7 @@ abstract public class MovingEntity extends EntityCreature {
         this.motionX *= (1 - this.getDrag());
         this.motionZ *= (1 - this.getDrag());
 
-        if (this.targetFinder != null) this.targetFinder.onUpdate();
+        if (this.targetAI != null) this.targetAI.onUpdate();
 
         if (this.route.isSearching() && System.currentTimeMillis() - this.route.stopRouteFindUntil > 1000) {
             this.route.forceStop();
@@ -322,12 +320,12 @@ abstract public class MovingEntity extends EntityCreature {
         this.route = route;
     }
 
-    public TargetFinder getTargetFinder() {
-        return targetFinder;
+    public TargetAI getTargetAI() {
+        return targetAI;
     }
 
-    public void setTargetFinder(TargetFinder targetFinder) {
-        this.targetFinder = targetFinder;
+    public void setTargetAI(TargetAI targetAI) {
+        this.targetAI = targetAI;
     }
 
     public void updateBotTask(MovingEntityTask task) {

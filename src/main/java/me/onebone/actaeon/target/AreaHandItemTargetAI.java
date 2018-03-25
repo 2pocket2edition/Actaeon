@@ -14,15 +14,14 @@
 package me.onebone.actaeon.target;
 
 import cn.nukkit.Player;
+import cn.nukkit.entity.Entity;
 import cn.nukkit.item.Item;
 import me.onebone.actaeon.entity.MovingEntity;
 import me.onebone.actaeon.util.Utils;
 
-public class AreaHandItemTargetAI extends TargetFinder {
-
+public class AreaHandItemTargetAI extends WanderTargetAI {
     private Item item;
     private int radius;
-    private Player near;
 
     public AreaHandItemTargetAI(MovingEntity entity, long interval, Item item, int radius) {
         super(entity, interval);
@@ -30,8 +29,9 @@ public class AreaHandItemTargetAI extends TargetFinder {
         this.radius = radius;
     }
 
-    protected void find() {
-        near = null;
+    @Override
+    protected Entity scan() {
+        Player near = null;
         double nearest = this.radius * this.radius;
 
         for (Player player : this.getEntity().getLevel().getPlayers().values()) {
@@ -42,20 +42,6 @@ public class AreaHandItemTargetAI extends TargetFinder {
                 }
             }
         }
-
-        if (near == null) {
-            if (this.entity.isCurrentIdentifier("randomPos")) {
-                if (Utils.rand(0, 6) == 0)
-                    this.entity.setTarget(Utils.randomVector(this.entity, 10, 0, 10).add(0, 7), "randomPos",
-                            !this.entity.isCurrentIdentifier("randomPos"));
-            } else {
-                this.entity.setTarget(Utils.randomVector(this.entity, 10, 0, 10).add(0, 7), "randomPos",
-                        true);
-            }
-        } else {
-            this.getEntity().setTarget(near, this.getEntity().getName(),
-                    this.entity.isCurrentIdentifier("randomPos"));
-            this.getEntity().setHate(near);
-        }
+        return near;
     }
 }

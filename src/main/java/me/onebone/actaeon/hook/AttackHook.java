@@ -30,9 +30,8 @@ public class AttackHook extends MovingEntityHook {
     private volatile long nextAttack = 0;
     private double attackDistance;
     private long coolDown;
-    private int effectual;  //攻击成功率 0~10
-    private double viewAngle;  //机器人视野范围（攻击有效范围）
-    private boolean jump;  //是否自动跳劈
+    private int effectual;
+    private double viewAngle;
     private float damage;
 
     public AttackHook(MovingEntity bot, double attackDistance, float damage, long coolDown, int effectual, double viewAngle) {
@@ -50,35 +49,6 @@ public class AttackHook extends MovingEntityHook {
         this.provider = provider;
     }
 
-    public float getDamage() {
-        return damage;
-    }
-
-    public void setDamage(float damage) {
-        this.damage = damage;
-    }
-
-    public long getCoolDown() {
-        return coolDown;
-    }
-
-    public void setCoolDown(long coolDown) {
-        this.coolDown = coolDown;
-    }
-
-    public long getNextAttack() {
-        return nextAttack;
-    }
-
-    public boolean canJump() {
-        return jump;
-    }
-
-    public AttackHook setJump(boolean jump) {
-        this.jump = jump;
-        return this;
-    }
-
     @Override
     public boolean shouldExecute() {
         Entity hate = this.entity.getHate();
@@ -88,13 +58,13 @@ public class AttackHook extends MovingEntityHook {
     @Override
     public void onUpdate(int tick) {
         if (System.currentTimeMillis() > this.nextAttack) {
-            this.nextAttack = System.currentTimeMillis() + coolDown;
-            if (this.entity.getHate() != null) {
+            if (this.entity.getTask() == null && this.entity.getHate() != null) {
                 Entity hate = this.entity.getHate();
                 if (this.entity.distance(hate) <= this.attackDistance) {
-                    if (this.entity.getTask() == null && Utils.rand(0, 10) < this.effectual) {
+                    if (Utils.rand(0, 10) < this.effectual) {
                         this.entity.updateBotTask(provider.provide(this.entity, hate, this.damage, this.viewAngle));
                     }
+                    this.nextAttack = System.currentTimeMillis() + coolDown;
                 }
             }
         }

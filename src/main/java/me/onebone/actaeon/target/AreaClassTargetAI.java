@@ -17,10 +17,8 @@ import cn.nukkit.entity.Entity;
 import cn.nukkit.math.SimpleAxisAlignedBB;
 import me.onebone.actaeon.entity.MovingEntity;
 
-public class AreaClassTargetAI extends TargetFinder {
-
+public class AreaClassTargetAI extends WanderTargetAI {
     private int radius;
-    private boolean first = true;
     private Class<? extends Entity> target;
 
     public AreaClassTargetAI(MovingEntity entity, Class<? extends Entity> target, long interval, int radius) {
@@ -29,7 +27,8 @@ public class AreaClassTargetAI extends TargetFinder {
         this.target = target;
     }
 
-    protected void find() {
+    @Override
+    protected Entity scan() {
         Entity near = null;
         double nearest = Double.MAX_VALUE;
 
@@ -39,14 +38,6 @@ public class AreaClassTargetAI extends TargetFinder {
                 nearest = this.getEntity().distance(e);
             }
         }
-
-        if (near == null) {
-            //this.getEntity().getRoute().forceStop();
-            this.getEntity().setTarget(null, this.getEntity().getName());
-        } else {
-            this.getEntity().setTarget(near, this.getEntity().getName(), this.first);
-            this.getEntity().setHate(near);
-        }
-        this.first = false;
+        return near;
     }
 }

@@ -14,22 +14,24 @@
 package me.onebone.actaeon.entity.monster;
 
 import cn.nukkit.entity.EntityAgeable;
-import cn.nukkit.entity.mob.EntityZombie;
+import cn.nukkit.entity.mob.EntityCreeper;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import me.onebone.actaeon.hook.AttackHook;
 import me.onebone.actaeon.hook.WanderHook;
 import me.onebone.actaeon.target.AreaPlayerTargetAI;
+import me.onebone.actaeon.task.attack.AttackTaskExplode;
 import me.onebone.actaeon.util.Utils;
 
-public class Zombie extends Monster implements EntityAgeable {
-    public static final int NETWORK_ID = EntityZombie.NETWORK_ID;
+public class Creeper extends Monster implements EntityAgeable {
+    public static final int NETWORK_ID = EntityCreeper.NETWORK_ID;
 
-    public Zombie(FullChunk chunk, CompoundTag nbt) {
+    public Creeper(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
         this.setTargetAI(new AreaPlayerTargetAI(this, 500, 32));
-        this.addHook("attack", new AttackHook(this, this.getAttackDistance(), this.getDamage(), 1000, 10, 180));
+        this.addHook("attack", new AttackHook(this, this.getAttackDistance(), this.getDamage(), Integer.MAX_VALUE, 10, 180,
+                ((entity, target, damage, viewAngle) -> new AttackTaskExplode(entity, target, damage, viewAngle, 60))));
         this.addHook("wander", new WanderHook(this));
     }
 
@@ -49,33 +51,30 @@ public class Zombie extends Monster implements EntityAgeable {
     }
 
     @Override
+    public float getDamage() {
+        //explosion power
+        return 2.8f;
+    }
+
+    @Override
     public float getHeight() {
-        if (isBaby()) {
-            return 0.8f;
-        }
         return 1.8f;
     }
 
     @Override
     public float getEyeHeight() {
-        if (isBaby()) {
-            return 0.51f;
-        }
         return 0.7f;
     }
 
     @Override
     public Item[] getDrops() {
         return new Item[]{
-                Item.get(Item.ROTTEN_FLESH, 0, Utils.rand(0, 3)),
-                Item.get(Item.IRON_INGOT, 0, Math.max(0, Utils.rand(-50, 1))),
-                Item.get(Item.CARROT, 0, Math.max(0, Utils.rand(-50, 1))),
-                Item.get(Item.POTATO, 0, Math.max(0, Utils.rand(-50, 1)))
+                Item.get(Item.GUNPOWDER, 0, Utils.rand(0, 3))
         };
     }
 
     public double getAttackDistance() {
-        return 1;
+        return 3;
     }
 
     @Override
@@ -96,6 +95,6 @@ public class Zombie extends Monster implements EntityAgeable {
 
     @Override
     public int getXp() {
-        return Utils.rand(1, 4) + (isBaby() ? 7 : 0);
+        return Utils.rand(1, 4);
     }
 }

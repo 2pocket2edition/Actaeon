@@ -13,13 +13,14 @@
 
 package me.onebone.actaeon.entity.monster;
 
+import cn.nukkit.Player;
 import cn.nukkit.entity.EntityAgeable;
 import cn.nukkit.entity.mob.EntitySkeleton;
 import cn.nukkit.item.Item;
+import cn.nukkit.item.ItemBow;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import me.onebone.actaeon.entity.attribute.IClimbable;
-import me.onebone.actaeon.entity.attribute.IFallable;
+import cn.nukkit.network.protocol.MobEquipmentPacket;
 import me.onebone.actaeon.hook.AttackHook;
 import me.onebone.actaeon.hook.WanderHook;
 import me.onebone.actaeon.target.AreaPlayerTargetAI;
@@ -29,12 +30,13 @@ import me.onebone.actaeon.util.Utils;
 /**
  * @author DaPorkchop_
  */
-public class Skeleton extends Monster implements EntityAgeable, IFallable, IClimbable {
+public class Skeleton extends Monster implements EntityAgeable {
     public static final int NETWORK_ID = EntitySkeleton.NETWORK_ID;
+    private static final ItemBow BOW = new ItemBow();
 
     public Skeleton(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-        this.setTargetFinder(new AreaPlayerTargetAI(this, 500, 32));
+        this.setTargetAI(new AreaPlayerTargetAI(this, 500, 32));
         this.addHook("attack", new AttackHook(this, this.getAttackDistance(), this.getDamage(), 5000, 10, 180, AttackTaskShoot::new));
         this.addHook("wander", new WanderHook(this));
     }
@@ -81,6 +83,17 @@ public class Skeleton extends Monster implements EntityAgeable, IFallable, IClim
 
     public double getAttackDistance() {
         return 16;
+    }
+
+    @Override
+    public void spawnTo(Player player) {
+        super.spawnTo(player);
+
+        MobEquipmentPacket pk = new MobEquipmentPacket();
+        pk.eid = this.getId();
+        pk.item = BOW;
+        pk.hotbarSlot = 9;
+        player.dataPacket(pk);
     }
 
     @Override

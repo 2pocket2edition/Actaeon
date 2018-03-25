@@ -18,7 +18,7 @@ public class AttackTaskShoot extends AttackTask {
     }
 
     @Override
-    protected void doAttack(boolean valid) {
+    protected boolean doAttack(boolean valid) {
         if (valid)  {
             double f = 1.2;
             double yaw = this.entity.yaw + Utils.rand(-110, 111) / 10;
@@ -27,7 +27,7 @@ public class AttackTaskShoot extends AttackTask {
                     this.entity.z + Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * 0.5, yaw, pitch, this.entity.level);
             Entity k = Entity.createEntity("Arrow", pos, this.entity);
             if (!(k instanceof EntityArrow)) {
-                return;
+                return false;
             }
 
             EntityArrow arrow = (EntityArrow) k;
@@ -51,5 +51,6 @@ public class AttackTaskShoot extends AttackTask {
                 }
             }
         }
+        return valid;
     }
 }

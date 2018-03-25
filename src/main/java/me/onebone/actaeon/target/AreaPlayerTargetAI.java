@@ -15,7 +15,6 @@ package me.onebone.actaeon.target;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
-import cn.nukkit.math.SimpleAxisAlignedBB;
 import me.onebone.actaeon.entity.MovingEntity;
 
 /**
@@ -23,23 +22,23 @@ import me.onebone.actaeon.entity.MovingEntity;
  *
  * @author DaPorkchop_
  */
-public class AreaPlayerTargetAI extends TargetFinder {
+public class AreaPlayerTargetAI extends WanderTargetAI {
 
     private int radius;
-    private boolean first = true;
 
     public AreaPlayerTargetAI(MovingEntity entity, long interval, int radius) {
         super(entity, interval);
         this.radius = radius;
     }
 
-    protected void find() {
+    @Override
+    protected Entity scan() {
         Player near = null;
         double nearest = radius * radius;
 
         for (Player p : this.getEntity().getLevel().getPlayers().values()) {
             if (p.getGamemode() == Player.CREATIVE || p.getGamemode() == Player.SPECTATOR)  {
-                continue;
+                //continue;
             }
             double d = this.getEntity().distanceSquared(p);
             if (d < nearest) {
@@ -47,14 +46,6 @@ public class AreaPlayerTargetAI extends TargetFinder {
                 nearest = Math.sqrt(d);
             }
         }
-
-        if (near == null) {
-            //this.getEntity().getRoute().forceStop();
-            this.getEntity().setTarget(null, this.getEntity().getName());
-        } else {
-            this.getEntity().setTarget(near, this.getEntity().getName(), this.first);
-            this.getEntity().setHate(near);
-        }
-        this.first = false;
+        return near;
     }
 }
